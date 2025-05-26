@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Prescriptions - {{ user.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #000;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Patient Prescription Report</h2>
+    <div class="info">
+        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+
+    {% if prescriptions %}
+    <table>
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Medicine</th>
+                <th>Dosage</th>
+                <th>Notes</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in prescriptions %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ p.medicine }}</td>
+                <td>{{ p.dosage }}</td>
+                <td>{{ p.notes }}</td>
+                <td>{{ p.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No prescriptions available.</p>
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nearby Skin Hospitals</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/img.png') }}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/near.css') }}">
+
+</head>
+
+<body>
+    <div class="wrapper d-flex flex-column min-vh-100">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url_for('home') }}">Autoimmune Skin Disease</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('detect') }}">Detection</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                        </li>
+
+                        {% if session.get('email') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle"></i> Profile
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{{ url_for('profile') }}">View Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-5 pt-5">
+            <h1 class="text-center">Nearby Skin Hospitals</h1>
+            <hr />
+
+            <div class="row">
+                <!-- Hospital 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card hospital-card h-100">
+                        <div class="hospital">
+                            <h3 class="card-title">SkinCare Clinic</h3>
+                            <hr />
+                            <p class="card-text">123 MG Road, Bangalore</p>
+                            <p class="card-text">Phone: +91 98765 43210</p>
+                            <div class="text-center mt-3">
+                                <a href="https://www.google.com/maps?q=123+MG+Road,+Bangalore" target="_blank"
+                                    class="btn btn-map">View on Map</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card hospital-card h-100">
+                        <div class="hospital">
+                            <h3 class="card-title">Derma Plus Hospital</h3>
+                            <hr />
+                            <p class="card-text">456 Indiranagar, Bangalore</p>
+                            <p class="card-text">Phone: +91 91234 56789</p>
+                            <div class="text-center mt-3">
+                                <a href="https://www.google.com/maps?q=456+Indiranagar,+Bangalore" target="_blank"
+                                    class="btn btn-map">View on Map</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card hospital-card h-100">
+                        <div class="hospital">
+                            <h3 class="card-title">Glow Skin Center</h3>
+                            <hr />
+                            <p class="card-text">789 Koramangala, Bangalore</p>
+                            <p class="card-text">Phone: +91 99887 77665</p>
+                            <div class="text-center mt-3">
+                                <a href="https://www.google.com/maps?q=789+Koramangala,+Bangalore" target="_blank"
+                                    class="btn btn-map">View on Map</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer text-center py-3 mt-auto bg-dark text-white fw-bold">
+            © 2025 . Autoimmune Skin Disease.
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

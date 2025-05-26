@@ -1,0 +1,116 @@
+body {
+    background-color: rgb(195, 249, 250) !important;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-brand {
+    margin-left: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar-nav .nav-link {
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: orange;
+}
+
+
+.container h1 {
+    font-weight: bold;
+    margin-bottom: 30px;
+
+    color: #333;
+}
+
+.hospital {
+    background-color: rgb(237, 232, 172) !important;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: #0d6efd;
+}
+
+.card-text {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.footer {
+    font-size: 14px;
+    background-color: #212529;
+    color: #ccc;
+}
+
+.hospital-card {
+    border: 2px solid #ddd;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.hospital-card:hover {
+    border-color: #0d6efd;
+    transform: scale(1.02);
+}
+
+.btn-map {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.btn-map:hover {
+    color: white;
+    background-color: black;
+}
+
+.hospital {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 20px;
+    }
+
+    .card-title {
+        font-size: 20px;
+    }
+
+    .card-text {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .hospital {
+        padding: 15px;
+    }
+
+    .btn-map {
+        width: 100%;
+    }
+}

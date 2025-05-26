@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Profile</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/img.png') }}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/profile.css') }}">
+</head>
+
+<body>
+    <div class="wrapper d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Autoimmune Skin Disease</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto"> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('detect') }}">Detection</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('nearby_hospitals') }}">Hospital List</a>
+                    </li>
+
+                    {% if session.get('email') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i> Profile
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('profile') }}">View Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mt-5 pt-5">
+
+        <div class="card profile-card shadow-lg mx-auto" style="max-width: 600px;">
+            <div class="card-body">
+                {% if user.image_path %}
+                <img src="{{ url_for('static', filename='profiles/' + user.image_path) }}" alt="User Profile Image"
+                    class="profile-img">
+                {% else %}
+                <img src="{{ url_for('static', filename='profiles/default.png') }}" alt="Default Profile Image"
+                    class="profile-img">
+                {% endif %}
+
+
+                <h5 class="card-title mb-3"><i class="fa fa-id-badge me-2 text-primary"></i>{{ user.name }}</h5>
+                <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+                <p class="card-text"><strong>Mobile:</strong> {{ user.number }}</p>
+                <p class="card-text"><strong>DOB:</strong> {{ user.dob }}</p>
+
+                <div class="d-flex justify-content-center mt-2">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        My Prescriptions
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+
+
+       
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header position-relative">
+                        <h5 class="modal-title mx-auto" id="exampleModalLabel">Prescriptions</h5>
+                        <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+                        {% if detections %}
+                        <div class="table-responsive">
+                            <table class="table" style="border: 1px solid #dee2e6; width: 100%; margin-top: 20px; ">
+                                <thead style="background-color: #343a40; color: white;">
+                                    <tr>
+                                        <th style="padding: 12px; text-align: center;">S.No</th>
+                                        <th style="padding: 12px; text-align: center;">Medicine</th>
+                                        <th style="padding: 12px; text-align: center;">Dosage</th>
+                                        <th style="padding: 12px; text-align: center;">Notes</th>
+                                        <th style="padding: 12px; text-align: center;">Visited Date</th>
+                                        <th style="padding: 12px; text-align: center;">Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for det in detections %}
+                                    <tr style="border: 1px solid #dee2e6;">
+                                        <td style="padding: 10px; text-align: center;">{{ loop.index }}</td>
+                                        <td style="padding: 10px;">{{ det.medicine }}</td>
+                                        <td style="padding: 10px;">{{ det.dosage }}</td>
+                                        <td style="padding: 10px;">{{ det.notes }}</td>
+                                        <td style="padding: 10px;">{{ det.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                        <td style="padding: 10px; text-align: center;">
+                                            <a href="{{ url_for('user_download_prescription', prescription_id=det.id) }}"
+                                                style="color: white; background-color: #0d6efd; padding: 6px 12px; border-radius: 5px; text-decoration: none;"
+                                                target="_blank">
+                                                Download
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                        {% else %}
+                        <p class="text-muted">No prescriptions found.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+</div>
+   
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

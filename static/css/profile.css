@@ -1,0 +1,94 @@
+body {
+    background-color: rgb(195, 249, 250) !important;
+}
+
+.navbar-brand {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    font-size: 20px;
+}
+.navbar-nav .nav-link {
+    color: white;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: rgb(1, 196, 198) !important;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.profile-card {
+    background-color: rgb(237, 232, 172);
+    border-radius: 15px;
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.profile-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+.card-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.footer {
+    font-size: 14px;
+    background-color: #212529;
+    color: #ccc;
+}
+
+
+.modal-dialog {
+    max-width: 90%;
+    
+}
+.modal-content{
+    background-color: rgb(211, 252, 253) !important;
+}
+.modal-body {
+    overflow-x: auto;
+    
+}
+
+.table td,
+.table th {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    white-space: nowrap;
+    border: 2px solid black;
+}
+
+.table thead th {
+    background-color: #343a40;
+    color: #fff;
+    border: 2px solid black;
+}
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 16px;
+    }
+}

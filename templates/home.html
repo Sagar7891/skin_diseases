@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Autoimmune Skin Disease</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/img.png') }}" type="image/png" />
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/home.css') }}" />
+
+    <style>
+        /* Full page background image */
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: black;
+            background: url("{{ url_for('static', filename='images/background_main1.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: #007bff !important;
+        }
+
+        .nav-link {
+            color: black !important;
+        }
+
+        .nav-link:hover {
+            color: #0d6efd !important;
+        }
+
+        #home img {
+            height: 85vh;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
+
+        #home .overlay {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 999;
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        /* Chatbot Styles */
+        #chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        #chatbot-icon:hover {
+            transform: scale(1.05);
+        }
+
+        #chatbot-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            color: black;
+        }
+
+        #chatbot-window .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            color: black;
+        }
+
+        #chat-input {
+            border-top: 1px solid #ccc;
+        }
+
+        /* Adjust content wrapper to avoid footer overlap */
+        .wrapper {
+            flex: 1 0 auto;
+            padding-bottom: 60px; /* same as footer height to avoid overlap */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper d-flex flex-column min-vh-100">
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url_for('home') }}">Autoimmune Skin Disease</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light fw-semibold" style="transition: 0.3s;"
+                                href="{{ url_for('doctor_users') }}">Patient List</a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link text-light fw-semibold" style="transition: 0.3s;"
+                                href="{{ url_for('doctor_create') }}">Add Patient</a>
+                        </li>
+                        <!--<li class="nav-item"><a class="nav-link" href="{{ url_for('detect') }}">Detection</a></li>-->
+                        <!--<li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>-->
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('nearby_hospitals') }}">Hospital List</a></li>
+                        {% if session.get('email') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle"></i> Profile
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ url_for('profile') }}">View Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="position-relative" style="margin-top: 56px;">
+            <!-- Added margin top to offset fixed navbar height -->
+            <!--<img src="{{ url_for('static', filename='images/hero.jpg') }}" class="w-100" alt="Skin Disease Hero Image" />-->
+            <div class="overlay">
+                <h1 class="display-5 fw-bold text-light">AI-Powered Autoimmune Skin Disease Detection</h1>
+                <p class="lead text-light">Fast, reliable, and accurate skin disease diagnostics</p>
+                <a href="{{ url_for('detect') }}" class="btn btn-primary btn-lg">Start Diagnosis</a>
+            </div>
+        </section>
+
+        <!-- Removed extra image section as background is on body -->
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                © 2025 Autoimmune Skin Disease. All rights reserved.
+            </div>
+        </footer>
+
+        <!-- Chatbot Button -->
+        <div id="chatbot-icon">
+            <i class="fas fa-comments fa-lg"></i>
+        </div>
+
+        <!-- Chatbot Window -->
+        <div id="chatbot-window">
+            <div class="header">
+                <span>Chatbot</span>
+                <button onclick="toggleChatbot()" class="btn btn-sm btn-danger px-2 py-0">X</button>
+            </div>
+            <div id="chat-messages"></div>
+            <div class="p-2 border-top">
+                <input
+                    type="text"
+                    id="chat-input"
+                    class="form-control"
+                    placeholder="Type a message..."
+                    onkeydown="if(event.key==='Enter') sendMessage()"
+                />
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let responses = [];
+
+        document.getElementById("chatbot-icon").addEventListener("click", toggleChatbot);
+
+        function toggleChatbot() {
+            const chatbot = document.getElementById("chatbot-window");
+            chatbot.style.display = chatbot.style.display === "none" || chatbot.style.display === "" ? "flex" : "none";
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("chat-input");
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage("user", message);
+            input.value = "";
+
+            const response = generateBotResponse(message);
+            addMessage("bot", response);
+
+            if (responses.length >= 10) responses.shift();
+            responses.push(response);
+        }
+
+        function addMessage(sender, text) {
+            const msgBox = document.getElementById("chat-messages");
+            const msgDiv = document.createElement("div");
+            msgDiv.style.marginBottom = "10px";
+            msgDiv.style.maxWidth = "80%";
+            msgDiv.style.padding = "8px 12px";
+            msgDiv.style.borderRadius = "15px";
+            msgDiv.style.fontSize = "0.95rem";
+            msgDiv.style.boxShadow = "0 1px 5px rgba(0,0,0,0.1)";
+            msgDiv.style.alignSelf = sender === "user" ? "flex-end" : "flex-start";
+            msgDiv.style.backgroundColor = sender === "user" ? "#dcf8c6" : "#f1f0f0";
+            msgDiv.textContent = text;
+            msgBox.appendChild(msgDiv);
+            msgBox.scrollTop = msgBox.scrollHeight;
+        }
+
+        function generateBotResponse(message) {
+            const msg = message.toLowerCase();
+            const responses = {
+                hi: "Hi! How can I assist you regarding Autoimmune Skin Disease?",
+                hello: "Hello! Need help with Autoimmune Skin Disease info?",
+                "what is autoimmune skin disease":
+                    "Autoimmune skin diseases occur when the immune system attacks healthy skin cells by mistake.",
+                symptoms: "Common symptoms include rashes, blisters, scaling, redness, and itchiness.",
+                causes:
+                    "Autoimmune skin diseases are caused by a misfiring immune system. Genetics and environmental factors can play a role.",
+                treatment:
+                    "Treatments may include corticosteroids, immunosuppressants, and lifestyle changes. Consult a dermatologist.",
+                "is it curable":
+                    "Most autoimmune skin diseases are chronic but manageable with proper treatment and care.",
+                contact: "You can reach our team through the Contact section for expert support.",
+                hospital: "Visit the 'Hospital List' page to find nearby hospitals for skin treatment.",
+                bye: "Goodbye! Feel free to come back anytime you have questions.",
+            };
+            return responses[msg] || "Sorry, I didn't understand that. Please ask about symptoms, treatment, or causes of Autoimmune Skin Disease.";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Prescription for {{ user.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            color: #333;
+        }
+
+        h2 {
+            color: #0069d9;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            margin: 4px 0;
+        }
+
+        .prescription-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+
+        .prescription-box p {
+            margin: 6px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Prescription Details</h2>
+
+    <div class="info">
+        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+
+    <div class="prescription-box">
+        <p><strong>Medicine:</strong> {{ prescription.medicine }}</p>
+        <p><strong>Dosage:</strong> {{ prescription.dosage }}</p>
+        <p><strong>Notes:</strong> {{ prescription.notes }}</p>
+        <p><strong>Date:</strong> {{ prescription.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+    </div>
+
+</body>
+
+</html>
