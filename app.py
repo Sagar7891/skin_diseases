@@ -23,7 +23,7 @@ app.secret_key = 'wverihdfuvuwi2482'
 # openai.api_key = "esecret_nqhhtffj88zp16fjcwpl33w8dh"
 # openai.api_base = "https://api.endpoints.anyscale.com/v1"
 # Initialize Groq client
-client = Groq(api_key="FIXME")  # Replace with your actual key
+client = Groq(api_key="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")  # Replace with your actual key
 
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
@@ -635,6 +635,7 @@ def view_prescriptions(user_id):
     conn.close()
     return render_template('view_prescriptions.html', prescriptions=prescriptions)
 
+from flask import jsonify
 
 @app.route('/doctor/ask_ai/<int:user_id>', methods=['GET', 'POST'])
 def ask_ai(user_id):
@@ -642,13 +643,10 @@ def ask_ai(user_id):
         flash("Unauthorized access", "danger")
         return redirect(url_for('login'))
 
-    answer = None
-    question = None
-
     if request.method == 'POST':
         question = request.form['question']
 
-        # Using Groq client for chat completion
+        # Call your AI model here
         completion = client.chat.completions.create(
             model="meta-llama/llama-4-scout-17b-16e-instruct",
             messages=[
@@ -659,10 +657,14 @@ def ask_ai(user_id):
             top_p=1,
             stream=False
         )
-
         answer = completion.choices[0].message.content
 
-    return render_template('ask_ai.html', user_id=user_id, question=question, answer=answer)
+        # Return JSON for AJAX call
+        return jsonify({'answer': answer})
+
+    # On GET just render the template without any messages
+    return render_template('ask_ai.html', user_id=user_id)
+
 
 
 
