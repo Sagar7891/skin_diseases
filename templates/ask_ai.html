@@ -1,0 +1,28 @@
+<!-- templates/ask_ai.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ask AI about Patient Condition</title>
+</head>
+
+<body>
+    <h2>AI Assistant - Ask Medical Questions</h2>
+    <form method="POST">
+        <label for="question">Your Question:</label><br>
+        <textarea name="question" rows="4" cols="50" required>{{ question or '' }}</textarea><br><br>
+        <button type="submit">Ask AI</button>
+    </form>
+
+    {% if answer %}
+    <h3>AI's Response:</h3>
+    <div style="white-space: pre-line; border: 1px solid #ccc; padding: 10px; background-color: #f5f5f5;">
+        {{ answer }}
+    </div>
+    {% endif %}
+
+    <br><a href="{{ url_for('doctor_users') }}">Back to Dashboard</a>
+</body>
+
+</html>
