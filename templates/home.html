@@ -132,7 +132,8 @@
         /* Adjust content wrapper to avoid footer overlap */
         .wrapper {
             flex: 1 0 auto;
-            padding-bottom: 60px; /* same as footer height to avoid overlap */
+            padding-bottom: 60px;
+            /* same as footer height to avoid overlap */
         }
     </style>
 </head>
@@ -154,14 +155,15 @@
                             <a class="nav-link text-light fw-semibold" style="transition: 0.3s;"
                                 href="{{ url_for('doctor_users') }}">Patient List</a>
                         </li>
-    
+
                         <li class="nav-item">
                             <a class="nav-link text-light fw-semibold" style="transition: 0.3s;"
                                 href="{{ url_for('doctor_create') }}">Add Patient</a>
                         </li>
                         <!--<li class="nav-item"><a class="nav-link" href="{{ url_for('detect') }}">Detection</a></li>-->
                         <!--<li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>-->
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('nearby_hospitals') }}">Hospital List</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('nearby_hospitals') }}">Hospital
+                                List</a></li>
                         {% if session.get('email') %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -169,7 +171,9 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{{ url_for('profile') }}">View Profile</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
                             </ul>
                         </li>
@@ -189,6 +193,8 @@
                 <h1 class="display-5 fw-bold text-light">AI-Powered Autoimmune Skin Disease Detection</h1>
                 <p class="lead text-light">Fast, reliable, and accurate skin disease diagnostics</p>
                 <a href="{{ url_for('detect') }}" class="btn btn-primary btn-lg">Start Diagnosis</a>
+                <a href="{{ url_for('ask_ai', user_id=1) }}" class="btn btn-secondary btn-lg ms-2">Ask AI</a>
+
             </div>
         </section>
 
@@ -214,13 +220,8 @@
             </div>
             <div id="chat-messages"></div>
             <div class="p-2 border-top">
-                <input
-                    type="text"
-                    id="chat-input"
-                    class="form-control"
-                    placeholder="Type a message..."
-                    onkeydown="if(event.key==='Enter') sendMessage()"
-                />
+                <input type="text" id="chat-input" class="form-control" placeholder="Type a message..."
+                    onkeydown="if(event.key==='Enter') sendMessage()" />
             </div>
         </div>
     </div>

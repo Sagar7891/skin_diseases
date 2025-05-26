@@ -3,7 +3,7 @@ from fileinput import filename
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
-import pdfkit
+#import pdfkit
 from flask import make_response
 import os
 from werkzeug.utils import secure_filename
@@ -11,6 +11,9 @@ import numpy as np
 import torch
 from torchvision import models, transforms
 from PIL import Image
+from groq import Groq
+import openai
+
 #from googletrans import Translator, LANGUAGES
 # import openai
 app = Flask(__name__)
@@ -19,6 +22,8 @@ app.secret_key = 'wverihdfuvuwi2482'
 
 # openai.api_key = "esecret_nqhhtffj88zp16fjcwpl33w8dh"
 # openai.api_base = "https://api.endpoints.anyscale.com/v1"
+# Initialize Groq client
+client = Groq(api_key="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")  # Replace with your actual key
 
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
@@ -631,6 +636,33 @@ def view_prescriptions(user_id):
     return render_template('view_prescriptions.html', prescriptions=prescriptions)
 
 
+@app.route('/doctor/ask_ai/<int:user_id>', methods=['GET', 'POST'])
+def ask_ai(user_id):
+    if session.get('role') != 'doctor':
+        flash("Unauthorized access", "danger")
+        return redirect(url_for('login'))
+
+    answer = None
+    question = None
+
+    if request.method == 'POST':
+        question = request.form['question']
+
+        # Using Groq client for chat completion
+        completion = client.chat.completions.create(
+            model="meta-llama/llama-4-scout-17b-16e-instruct",
+            messages=[
+                {"role": "user", "content": question}
+            ],
+            temperature=1,
+            max_tokens=1024,
+            top_p=1,
+            stream=False
+        )
+
+        answer = completion.choices[0].message.content
+
+    return render_template('ask_ai.html', user_id=user_id, question=question, answer=answer)
 
 
 
