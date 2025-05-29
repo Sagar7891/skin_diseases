@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Summarized Notes</title>
+</head>
+
+<body>
+    <h2>Original Notes:</h2>
+    <p style="white-space: pre-line;">{{ notes }}</p>
+
+    <hr>
+
+    <h2>AI-Generated Summary (2 lines):</h2>
+    <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
+        {{ summary }}
+    </div>
+
+    <br>
+    <a href="{{ url_for('doctor_users') }}">⬅️ Back to Dashboard</a>
+</body>
+
+</html>

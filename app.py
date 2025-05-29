@@ -664,9 +664,40 @@ def ask_ai(user_id):
 
     return render_template('ask_ai.html', user_id=user_id, question=question, answer=answer)
 
+@app.route('/doctor/summarize_notes/<int:user_id>', methods=['GET'])
+def summarize_notes(user_id):
+    if session.get('role') != 'doctor':
+        flash("Unauthorized access", "danger")
+        return redirect(url_for('login'))
 
+    # Connect to database and fetch all notes for the patient
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT notes FROM prescriptions WHERE patient_id = %s", (user_id,))
+    results = cursor.fetchall()
+    conn.close()
 
+    if not results:
+        flash("No notes found for this patient", "danger")
+        return redirect(url_for('doctor_users'))
 
+    # Combine all notes into a single string
+    all_notes = "\n".join([row[0] for row in results if row[0]])
+
+    # Summarize using Groq
+    prompt = f"Summarize the following combined medical notes for a patient in 2 concise lines:\n\n{all_notes}"
+    completion = client.chat.completions.create(
+        model="meta-llama/llama-4-scout-17b-16e-instruct",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.7,
+        max_tokens=150,
+        top_p=1,
+        stream=False
+    )
+
+    summary = completion.choices[0].message.content
+
+    return render_template('summary_notes.html', summary=summary, notes=all_notes)
 if __name__ == '__main__':
     app.run(debug=True)
 

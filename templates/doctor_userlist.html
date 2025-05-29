@@ -14,7 +14,7 @@
 </head>
 
 <body>
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
         <div class="container-fluid">
             <a class="navbar-brand text-warning" href="{{ url_for('doctor_dashboard') }}">Doctor Dashboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -25,15 +25,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="{{ url_for('doctor_dashboard') }}">Home</a>
                     </li>
-                    
-                    
+
+
 
                     <li class="nav-item">
                         <a class="nav-link text-light fw-semibold" style="transition: 0.3s;"
                             href="{{ url_for('doctor_create') }}">Add Patient</a>
                     </li>
-                    
-                   
+
+
                     {% if session.get('email') %}
                     <li class="nav-item">
                         <a class="nav-link text-light" href="{{ url_for('logout') }}">Logout</a>
@@ -104,30 +104,39 @@
                     <td>
 
                         <!-- Microphone Button -->
-<button id="recordBtn{{ user.id }}" class="btn btn-outline-primary" onclick="toggleRecording('{{ user.id }}')">
-    <i class="bi bi-mic-fill"></i>
-  </button>
-  
-  <!-- Add Prescription -->
-  <button class="btn btn-outline-secondary" onclick="openModal('addPrescriptionModal{{ loop.index }}')">
-    <i class="bi bi-plus-circle"></i>
-  </button>
-  
-  <!-- View Prescription -->
-  <button class="btn btn-outline-success" onclick="openModal('viewPrescriptionModal{{ loop.index }}')">
-    <i class="bi bi-eye-fill"></i>
-  </button>
-  
-  <!-- Edit -->
-  <button class="btn btn-outline-info" onclick="openModal('editModal{{ loop.index }}')">
-    <i class="bi bi-pencil-square"></i>
-  </button>
-  
-  <!-- Delete -->
-  <button class="btn btn-outline-danger" onclick="openModal('deleteModal{{ loop.index }}')">
-    <i class="bi bi-trash-fill"></i>
-  </button>
-  
+                        <button id="recordBtn{{ user.id }}" class="btn btn-outline-primary"
+                            onclick="toggleRecording('{{ user.id }}')">
+                            <i class="bi bi-mic-fill"></i>
+                        </button>
+
+                        <!-- Add Prescription -->
+                        <button class="btn btn-outline-secondary"
+                            onclick="openModal('addPrescriptionModal{{ loop.index }}')">
+                            <i class="bi bi-plus-circle"></i>
+                        </button>
+
+                        <!-- View Prescription -->
+                        <button class="btn btn-outline-success"
+                            onclick="openModal('viewPrescriptionModal{{ loop.index }}')">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
+
+                        <!-- Edit -->
+                        <button class="btn btn-outline-info" onclick="openModal('editModal{{ loop.index }}')">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+
+                        <!-- Delete -->
+                        <button class="btn btn-outline-danger" onclick="openModal('deleteModal{{ loop.index }}')">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+
+                        <a href="{{ url_for('summarize_notes', user_id=user['id']) }}">
+                            <button class="btn btn-outline-warning">
+                                <i class="bi bi-journal-text"></i> Summarize Notes
+                            </button>
+                        </a>
+
                     </td>
                 </tr>
                 {% endfor %}
@@ -245,6 +254,8 @@
                     <button type="submit"
                         style="background-color: #a0e6b8; color: #000; padding: 10px 15px; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer;">Add
                         Prescription</button>
+
+
                 </form>
             </div>
         </div>
@@ -481,7 +492,7 @@
 
             recognition.onend = function () {
                 if (isRecordingMap[patientId]) {
-                    recognition.start(); 
+                    recognition.start();
                 } else {
                     stopRecognitionUI(patientId);
                 }
@@ -496,7 +507,7 @@
             isRecordingMap[patientId] = false;
         }
     </script>
-    
+
 
 
 
