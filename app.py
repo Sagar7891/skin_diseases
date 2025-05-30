@@ -13,7 +13,8 @@ from torchvision import models, transforms
 from PIL import Image
 from groq import Groq
 import openai
-
+from deep_translator import GoogleTranslator
+from flask import Flask, request, jsonify
 #from googletrans import Translator, LANGUAGES
 # import openai
 app = Flask(__name__)
@@ -329,21 +330,26 @@ def detect():
                            treatment=treatment,
                            image_url=image_url)
 
+def translate_text(text, lang):
+    try:
+        if not text:
+            return ""
+        return GoogleTranslator(source='auto', target=lang).translate(text)
+    except Exception as e:
+        print(f"[Translation Error]: {e}")
+        return "[Translation Failed]"
 
 @app.route('/translate', methods=['POST'])
 def translate():
-    data = request.get_json()
-    lang = data.get('lang')
-    predect = data.get('predect')
-    description = data.get('description')
-    symptoms = data.get('symptoms')
-    treatment = data.get('treatment')
-    
-   
-    if lang not in LANGUAGES:
-        return jsonify({"error": "Invalid language code"}), 400
-    
-  
+    data = request.get_json(force=True)
+    print("Incoming translation request:", data)
+
+    lang = data.get('lang', 'en')
+    predect = data.get('predect', '')
+    description = data.get('description', '')
+    symptoms = data.get('symptoms', '')
+    treatment = data.get('treatment', '')
+
     try:
         translated_predect = translate_text(predect, lang)
         translated_description = translate_text(description, lang)
@@ -357,13 +363,9 @@ def translate():
             'treatment': translated_treatment
         })
     except Exception as e:
+        print("Translation error:", e)
         return jsonify({"error": str(e)}), 500
 
-def translate_text(text, lang):
-
-    translator = Translator()
-    translated = translator.translate(text, dest=lang)
-    return translated.text
 
 @app.route('/logout')
 def logout():
