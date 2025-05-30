@@ -3,7 +3,7 @@ from fileinput import filename
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
-#import pdfkit
+import pdfkit
 from flask import make_response
 import os
 from werkzeug.utils import secure_filename
@@ -163,7 +163,7 @@ def user_download_prescription(prescription_id):
     conn.close()
 
     html = render_template('prescription_pdf_single.html', user=user, prescription=prescription)
-    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf')
     pdf = pdfkit.from_string(html, False, configuration=config)
 
 
@@ -635,6 +635,7 @@ def view_prescriptions(user_id):
     conn.close()
     return render_template('view_prescriptions.html', prescriptions=prescriptions)
 
+from flask import jsonify
 
 @app.route('/doctor/ask_ai/<int:user_id>', methods=['GET', 'POST'])
 def ask_ai(user_id):
@@ -642,13 +643,10 @@ def ask_ai(user_id):
         flash("Unauthorized access", "danger")
         return redirect(url_for('login'))
 
-    answer = None
-    question = None
-
     if request.method == 'POST':
         question = request.form['question']
 
-        # Using Groq client for chat completion
+        # Call your AI model here
         completion = client.chat.completions.create(
             model="meta-llama/llama-4-scout-17b-16e-instruct",
             messages=[
@@ -659,10 +657,14 @@ def ask_ai(user_id):
             top_p=1,
             stream=False
         )
-
         answer = completion.choices[0].message.content
 
-    return render_template('ask_ai.html', user_id=user_id, question=question, answer=answer)
+        # Return JSON for AJAX call
+        return jsonify({'answer': answer})
+
+    # On GET just render the template without any messages
+    return render_template('ask_ai.html', user_id=user_id)
+
 
 
 

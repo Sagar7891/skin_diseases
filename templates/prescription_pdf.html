@@ -1,80 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <title>Prescriptions - {{ user.name }}</title>
     <style>
+        :root {
+            --primary: #343a40;
+            --highlight: #0069d9;
+            --bg: #f8f9fa;
+            --border: #dee2e6;
+            --accent: #ffffff;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 960px;
+            background: var(--accent);
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
         }
 
         h2 {
             text-align: center;
+            color: var(--highlight);
+            margin-bottom: 25px;
+        }
+
+        .info {
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .info p {
+            margin: 4px 0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            font-size: 15px;
+            background-color: #fff;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
-        table,
-        th,
-        td {
-            border: 1px solid #000;
-        }
-
-        th,
-        td {
-            padding: 8px;
+        th, td {
+            padding: 12px 15px;
             text-align: left;
+            border: 1px solid var(--border);
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #f1f3f5;
+            color: #495057;
+            font-weight: 600;
         }
 
-        .info {
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #eef3fc;
+        }
+
+        .no-data {
             margin-top: 20px;
+            font-style: italic;
+            color: #888;
         }
     </style>
 </head>
 
 <body>
-    <h2>Patient Prescription Report</h2>
-    <div class="info">
-        <p><strong>Name:</strong> {{ user.name }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
+
+    <div class="container">
+        <h2>Patient Prescription Report</h2>
+
+        <div class="info">
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+        </div>
+
+        {% if prescriptions %}
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Medicine</th>
+                    <th>Dosage</th>
+                    <th>Notes</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in prescriptions %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ p.medicine }}</td>
+                    <td>{{ p.dosage }}</td>
+                    <td>{{ p.notes }}</td>
+                    <td>{{ p.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="no-data">No prescriptions available.</p>
+        {% endif %}
     </div>
 
-    {% if prescriptions %}
-    <table>
-        <thead>
-            <tr>
-                <th>S.No</th>
-                <th>Medicine</th>
-                <th>Dosage</th>
-                <th>Notes</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for p in prescriptions %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ p.medicine }}</td>
-                <td>{{ p.dosage }}</td>
-                <td>{{ p.notes }}</td>
-                <td>{{ p.created_at }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No prescriptions available.</p>
-    {% endif %}
 </body>
 
 </html>

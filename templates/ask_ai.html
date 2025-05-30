@@ -1,28 +1,423 @@
-<!-- templates/ask_ai.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Ask AI about Patient Condition</title>
+  <meta charset="UTF-8" />
+  <title>AI Assistant - Medical Questions</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('../static/images/background_main1.jpg') no-repeat center center fixed !important;
+  background-size: cover !important;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+
+
+    .container {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 650px;
+      padding: 48px 40px 40px 40px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Back button */
+    .back-button {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: #2563eb;
+      font-weight: 600;
+      font-size: 1.1rem;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .back-button:hover,
+    .back-button:focus {
+      outline: none;
+      color: #1d4ed8;
+      background-color: #dbeafe;
+    }
+
+    .back-button svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      user-select: none;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-weight: 700;
+      color: #1e293b;
+      text-align: center;
+      font-size: 1.8rem;
+      user-select: none;
+    }
+
+    /* Chat window */
+    #chat-window {
+      background-color: #f9fafb;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      height: 320px;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 1rem;
+      color: #334155;
+      line-height: 1.4;
+      box-shadow: inset 0 0 6px #cbd5e1;
+      user-select: text;
+    }
+
+    /* Message bubbles */
+    .message {
+      max-width: 75%;
+      padding: 14px 18px;
+      border-radius: 20px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+      line-height: 1.4;
+      font-size: 1rem;
+      position: relative;
+    }
+
+    .message.user {
+      background-color: #2563eb;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message.ai {
+      background-color: #e0e7ff;
+      color: #1e293b;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      padding-right: 56px; /* space for buttons */
+    }
+
+    /* Buttons container inside AI message */
+    .ai-buttons {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-small {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: black;
+      padding: 2px;
+      border-radius: 6px;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      transition: none;
+    }
+
+    .btn-small svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Form */
+    form#chat-form {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      position: relative;
+    }
+
+    label[for='question'] {
+      display: none; /* hidden, since placeholder is clear */
+    }
+
+    textarea#question {
+      flex-grow: 1;
+      resize: none;
+      min-height: 60px;
+      max-height: 140px;
+      border: 2px solid #94a3b8;
+      border-radius: 12px;
+      padding: 14px 56px 14px 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      color: #334155;
+      line-height: 1.4;
+      transition: border-color 0.3s ease;
+    }
+
+    textarea#question:focus {
+      border-color: #2563eb;
+      outline: none;
+      box-shadow: 0 0 8px #2563ebaa;
+    }
+
+    /* Send button inside textarea */
+    #send-button {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background-color: #2563eb;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: white;
+      padding: 0;
+    }
+
+    #send-button:disabled {
+      background-color: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    #send-button:hover:not(:disabled),
+    #send-button:focus:not(:disabled) {
+      background-color: #1d4ed8;
+      outline: none;
+      box-shadow: 0 0 8px #1d4ed8aa;
+    }
+
+    #send-button svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      user-select: none;
+    }
+
+    /* Scrollbar style */
+    #chat-window::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #chat-window::-webkit-scrollbar-thumb {
+      background-color: #94a3b8;
+      border-radius: 10px;
+    }
+
+    #chat-window::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 36px 24px 32px 24px;
+      }
+      #chat-window {
+        height: 260px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="container" role="main" aria-label="Medical AI assistant chat interface">
+    <button class="back-button" onclick="window.location.href='{{ url_for('home') }}'" aria-label="Back to dashboard">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" fill="none" />
+      </svg>
+      Home
+    </button>
+
     <h2>AI Assistant - Ask Medical Questions</h2>
-    <form method="POST">
-        <label for="question">Your Question:</label><br>
-        <textarea name="question" rows="4" cols="50" required>{{ question or '' }}</textarea><br><br>
-        <button type="submit">Ask AI</button>
+
+    <section id="chat-window" aria-live="polite" aria-label="Chat conversation" tabindex="0">
+      <!-- Messages will stack here -->
+    </section>
+
+    <form id="chat-form" aria-label="Send medical question form" autocomplete="off" spellcheck="false">
+      <label for="question">Your Question:</label>
+      <textarea id="question" name="question" placeholder="Type your medical question here..." required aria-required="true"></textarea>
+      <button id="send-button" type="submit" aria-label="Send question" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
+        </svg>
+      </button>
     </form>
+  </main>
 
-    {% if answer %}
-    <h3>AI's Response:</h3>
-    <div style="white-space: pre-line; border: 1px solid #ccc; padding: 10px; background-color: #f5f5f5;">
-        {{ answer }}
-    </div>
-    {% endif %}
+  <script>
+    (() => {
+      const chatWindow = document.getElementById('chat-window');
+      const chatForm = document.getElementById('chat-form');
+      const questionInput = document.getElementById('question');
+      const sendButton = document.getElementById('send-button');
 
-    <br><a href="{{ url_for('doctor_users') }}">Back to Dashboard</a>
+      let editing = false;
+      let editUserMessage = null;
+      let editAIMessage = null;
+
+      questionInput.addEventListener('input', () => {
+        sendButton.disabled = questionInput.value.trim().length === 0;
+      });
+
+      function appendMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender);
+        messageDiv.textContent = text;
+
+        if (sender === 'ai') {
+          const btnContainer = document.createElement('div');
+          btnContainer.classList.add('ai-buttons');
+
+          const copyBtn = document.createElement('button');
+          copyBtn.classList.add('btn-small');
+          copyBtn.setAttribute('aria-label', 'Copy AI response');
+          copyBtn.title = "Copy response";
+          copyBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" />
+            </svg>
+          `;
+          copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(text).then(() => {
+              copyBtn.textContent = '✓';
+              setTimeout(() => copyBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" />
+                </svg>`, 1000);
+            });
+          });
+
+          const editBtn = document.createElement('button');
+          editBtn.classList.add('btn-small');
+          editBtn.setAttribute('aria-label', 'Edit your previous question');
+          editBtn.title = "Edit previous question";
+          editBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" />
+              <path d="M20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" stroke="currentColor" />
+            </svg>
+          `;
+          editBtn.addEventListener('click', () => {
+            const userMessages = chatWindow.querySelectorAll('.message.user');
+            if (userMessages.length === 0) return;
+            editUserMessage = userMessages[userMessages.length - 1];
+            editAIMessage = messageDiv;
+            questionInput.value = editUserMessage.textContent;
+            sendButton.disabled = false;
+            questionInput.focus();
+            editing = true;
+          });
+
+          btnContainer.appendChild(copyBtn);
+          //btnContainer.appendChild(editBtn);
+          messageDiv.appendChild(btnContainer);
+        }
+
+        chatWindow.appendChild(messageDiv);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        return messageDiv;
+      }
+
+      chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const question = questionInput.value.trim();
+        if (!question) return;
+
+        if (editing && editUserMessage && editAIMessage) {
+          editUserMessage.remove();
+          editAIMessage.remove();
+        }
+
+        const userMsgEl = appendMessage(question, 'user');
+
+        questionInput.value = '';
+        sendButton.disabled = true;
+        questionInput.focus();
+
+        try {
+          const response = await fetch(window.location.href, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ question })
+          });
+
+          if (!response.ok) {
+            appendMessage('Error: Could not get response from AI.', 'ai');
+            editing = false;
+            return;
+          }
+
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const data = await response.json();
+            if (data.answer) {
+              appendMessage(data.answer, 'ai');
+            } else {
+              appendMessage('AI did not return an answer.', 'ai');
+            }
+          } else {
+            appendMessage('AI response received.', 'ai');
+          }
+        } catch (error) {
+          appendMessage('Error: ' + error.message, 'ai');
+        }
+
+        editing = false;
+        editUserMessage = null;
+        editAIMessage = null;
+      });
+
+      questionInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          if (!sendButton.disabled) chatForm.dispatchEvent(new Event('submit'));
+        }
+      });
+    })();
+  </script>
 </body>
 
 </html>
