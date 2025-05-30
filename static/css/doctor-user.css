@@ -73,13 +73,13 @@ td {
 }
 
 th {
-    background-color: blue;
+    background-color: black;
     color: white;
     font-weight: bold;
 }
 
 tbody tr:nth-child(odd) {
-    background-color: #f1f9ff;
+    background-color: white;
 }
 
 

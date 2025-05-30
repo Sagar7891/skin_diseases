@@ -10,6 +10,83 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/doctor-user.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap + Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Custom Styles -->
+<style>
+    .glass-card {
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        color: #ffffff;
+        border-radius: 20px;
+        padding: 20px;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 8px 16px rgba(0, 255, 255, 0.2);
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0, 255, 255, 0.4);
+    }
+
+    .profile-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #00d1ff;
+    }
+
+    .user-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .user-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #00d1ff;
+    }
+
+    .index-badge {
+        background: #00d1ff;
+        color: #000;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 1rem;
+    }
+
+    .icon-btn {
+        border: 1px solid #00d1ff;
+        color: #00d1ff;
+        background: transparent;
+        transition: 0.3s;
+    }
+
+    .icon-btn:hover {
+        background: #00d1ff;
+        color: #000;
+    }
+
+    .tooltip-inner {
+        background-color: #00d1ff !important;
+        color: black;
+    }
+
+    .tooltip.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before {
+        border-top-color: #00d1ff !important;
+    }
+
+    a.btn {
+        padding: 6px 12px;
+    }
+</style>
     <style>
         body{
             background-image: url('../static/images/background_main1.jpg');
@@ -18,6 +95,335 @@
             background-position: center center;
             background-attachment: fixed; /* optional: makes background fixed during scroll */
         }
+    </style>
+    <style>
+.custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    overflow: auto;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-modal-content {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.custom-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.custom-modal-title {
+    margin: 0;
+    font-size: 1.4rem;
+    color: white;
+}
+
+.custom-btn-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.custom-btn-close:hover {
+    color: #fff;
+}
+
+.prescription-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid white;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+}
+
+.form-group label {
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0 5px;
+    font-size: 0.9rem;
+    color: white;
+    pointer-events: none;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #00d1ff, #00e6b8);
+    color: #000;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg, #00f0ff, #00ffa2);
+}
+
+    </style>
+
+    <style>
+        .edit-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+    overflow-y: auto;
+}
+
+.edit-modal-content {
+    background: #000;
+    color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 520px;
+    box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2);
+    animation: slideFade 0.4s ease-in-out;
+}
+
+@keyframes slideFade {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.edit-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.edit-modal-title {
+    font-size: 1.4rem;
+    color: #00f0ff;
+}
+
+.edit-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.edit-modal-close:hover {
+    color: #fff;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.edit-group label {
+    font-weight: 600;
+    color: #ccc;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.edit-group input[type="text"],
+.edit-group input[type="email"],
+.edit-group input[type="date"],
+.edit-group input[type="file"],
+.edit-group textarea {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #444;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.edit-group input:focus {
+    border-color: #00f0ff;
+}
+
+.edit-group img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #00f0ff;
+    margin-top: 5px;
+}
+
+.edit-submit-btn {
+    background: linear-gradient(135deg, #00f0ff, #00ffa2);
+    color: #000;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.edit-submit-btn:hover {
+    background: linear-gradient(135deg, #00ffa2, #00f0ff);
+}
+
+    </style>
+    <style>
+        .modal-view {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(2px);
+  overflow-y: auto;
+}
+
+.modal-view-content {
+  background-color: #000; /* solid black */
+  color: #fff;
+  margin: 5% auto;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(50px); opacity: 1; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.modal-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+  margin-bottom: 20px;
+}
+
+.modal-view-title {
+  font-size: 1.4rem;
+  color: #fff;
+  margin: 0;
+}
+
+.modal-view-close {
+  font-size: 2rem;
+  color: #888;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.modal-view-close:hover {
+  color: #fff;
+}
+
+.modal-view-body {
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.modal-view-no-data {
+  text-align: center;
+  color: #aaa;
+  font-style: italic;
+  padding: 20px;
+}
+
+.modal-view-table-container {
+  overflow-x: auto;
+}
+
+.modal-view-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #000; /* Black by default */
+  border: 1px solid #333;
+  color: #fff;
+}
+
+.modal-view-table th,
+.modal-view-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.modal-view-table th {
+  background-color: #111;
+  color: #00f7ff;
+  font-weight: 600;
+}
+
+.modal-view-table tr:hover {
+  background-color: #111; /* Slightly lighter black */
+}
+
+.modal-view-download-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  background: transparent;
+  color: #00f7ff;
+  border: 1px solid #00f7ff;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+
+
     </style>
 </head>
 
@@ -57,10 +463,10 @@
     </nav>
 
 
-    <h3>👥 Patient List</h3>
+    <h3 style="color: white !important; margin-top: 40px;">Patient List</h3>
     <div style="text-align: center; margin-bottom: 10px; margin-top:6px">
         <input type="text" id="patientSearch" placeholder="Search patient..."
-            style="padding: 8px 12px; width: 250px; border: 2px solid blue; border-radius: 12px; font-size: 1rem;">
+            style="padding: 8px 12px; width: 250px; border: 2px solid black; border-radius: 12px; font-size: 1rem;">
     </div>
 
     <div class="container-fluid ">
@@ -69,7 +475,7 @@
             style="text-align: center; font-weight: bold; padding: 15px; font-size: 1.1rem; margin: 10px 0; background-color: green; color: white; position: relative;">
             {{ message }}
             <button type="button" class="close-btn" onclick="closeAlert(this)"
-                style="position: absolute; top: 5px; right: 10px; background-color: red; border: none; font-size: 1.8rem; color: white; cursor: pointer; padding: 5px 10px; border-radius: 10%; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                style="position: absolute; top: 5px; right: 10px; background-color: black; border: none; font-size: 1.8rem; color: white; cursor: pointer; padding: 5px 10px; border-radius: 10%; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
                 &times;
             </button>
         </div>
@@ -77,133 +483,111 @@
 
 
 
-        <table>
-            <thead>
-                <tr>
-                    <th>S.No</th>
-                    <!--<th>ID</th>-->
-                    <th>Name</th>
-                    <!--<th>Profile</th>-->
-                    <th>Email</th>
-                    <th>Number</th>
-                    <!--<th>Role</th>-->
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="container py-4">
+            <div class="row">
                 {% for user in users %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <!--<td>{{ user.id }}</td>-->
-                    <td>{{ user.name }}</td>
-                    <!--<td>
-                        {% if user.image_path %}
-                        <img src="{{ url_for('static', filename='profiles/' + user.image_path) }}"
-                            alt="User Profile Image"
-                            style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                        {% else %}
-                        <img src="{{ url_for('static', filename='profiles/default.png') }}" alt="Default Profile Image"
-                            style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                        {% endif %}
-                    </td>-->
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.number }}</td>
-                    <!--<td>{{ user.role }}</td>-->
-                    <td>
-
-                        <!-- Microphone Button -->
-                        <button id="recordBtn{{ user.id }}" class="btn btn-outline-primary"
-                            onclick="toggleRecording('{{ user.id }}')">
-                            <i class="bi bi-mic-fill"></i>
-                        </button>
-
-                        <!-- Add Prescription -->
-                        <button class="btn btn-outline-secondary"
-                            onclick="openModal('addPrescriptionModal{{ loop.index }}')">
-                            <i class="bi bi-plus-circle"></i>
-                        </button>
-
-                        <!-- View Prescription -->
-                        <button class="btn btn-outline-success"
-                            onclick="openModal('viewPrescriptionModal{{ loop.index }}')">
-                            <i class="bi bi-eye-fill"></i>
-                        </button>
-
-                        <!-- Edit -->
-                        <button class="btn btn-outline-info" onclick="openModal('editModal{{ loop.index }}')">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-
-                        <!-- Delete -->
-                        <button class="btn btn-outline-danger" onclick="openModal('deleteModal{{ loop.index }}')">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-
-                        <a href="{{ url_for('summarize_notes', user_id=user['id']) }}">
-                            <button class="btn btn-outline-warning">
-                                <i class="bi bi-journal-text"></i> Summarize Notes
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="glass-card">
+                        <div class="user-header">
+                            <span class="user-name" style="color: white;">{{ user.name }}</span>
+                            <!--<span class="index-badge">#{{ loop.index }}</span>-->
+                        </div>
+        
+                        <!-- Profile Pic -->
+                        <div class="mb-3 text-center">
+                            <img src="{{ url_for('static', filename='profiles/' + user.image_path if user.image_path else 'profiles/default.png') }}"
+                                 alt="Profile" class="profile-pic">
+                        </div>
+        
+                        <!-- User Info -->
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <p><strong>Number:</strong> {{ user.number }}</p>
+        
+                        <!-- Action Buttons -->
+                        <div class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
+                            <button class="btn icon-btn" onclick="toggleRecording('{{ user.id }}')" data-bs-toggle="tooltip" title="Record">
+                                <i class="bi bi-mic-fill"></i>
                             </button>
-                        </a>
-
-                    </td>
-                </tr>
+                            <button class="btn icon-btn" onclick="openModal('addPrescriptionModal{{ loop.index }}')" data-bs-toggle="tooltip" title="Add Prescription">
+                                <i class="bi bi-plus-circle"></i>
+                            </button>
+                            <button class="btn icon-btn" onclick="openModal('viewPrescriptionModal{{ loop.index }}')" data-bs-toggle="tooltip" title="View Prescription">
+                                <i class="bi bi-eye-fill"></i>
+                            </button>
+                            <button class="btn icon-btn" onclick="openModal('editModal{{ loop.index }}')" data-bs-toggle="tooltip" title="Edit">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn icon-btn" onclick="openModal('deleteModal{{ loop.index }}')" data-bs-toggle="tooltip" title="Delete">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                            <a href="{{ url_for('summarize_notes', user_id=user['id']) }}" class="btn icon-btn" data-bs-toggle="tooltip" title="Summarize Notes">
+                                <i class="bi bi-journal-text"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            </div>
+        </div>
+        
+        <!-- Enable Bootstrap Tooltips -->
+        <script>
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        </script>
+        
 
 
     {% for user in users %}
 
-    <div class="modal" id="editModal{{ loop.index }}" aria-hidden="true" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto;
-        background-color: rgba(0,0,0,0.5);">
-        <div class="modal-content"
-            style="background-color: #d1fcf5; margin: 5% auto; padding: 30px; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);">
-
-            <div class="modal-header"
-                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h5 class="modal-title" style="font-size: 1.25rem; color: #333; margin: 0;">Edit Patient - {{ user.name
-                    }}
-                </h5>
-                <button class="btn-close" onclick="closeModal('editModal{{ loop.index }}')"
-                    style="background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer;">&times;</button>
+    <div class="edit-modal" id="editModal{{ loop.index }}" aria-hidden="true">
+        <div class="edit-modal-content">
+            <div class="edit-modal-header">
+                <h5 class="edit-modal-title">Edit Patient - {{ user.name }}</h5>
+                <button class="edit-modal-close" onclick="closeModal('editModal{{ loop.index }}')">&times;</button>
             </div>
-
-            <div class="modal-body">
-                <form method="POST" action="{{ url_for('edit_patient', user_id=user.id) }}"
-                    enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 15px;">
-
-                    <label for="name" style="font-weight: 600; color: #555;">Name</label>
-                    <input type="text" name="name" value="{{ user.name }}"
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; font-size: 1rem;">
-
-                    <label for="email" style="font-weight: 600; color: #555;">Email</label>
-                    <input type="email" name="email" value="{{ user.email }}"
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; font-size: 1rem;">
-
-                    <label for="number" style="font-weight: 600; color: #555;">Number</label>
-                    <input type="text" name="number" value="{{ user.number }}"
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; font-size: 1rem;">
-
-                    <label for="dob" style="font-weight: 600; color: #555;">Date of Birth</label>
-                    <input type="date" name="dob" value="{{ user.dob }}"
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; font-size: 1rem;">
-
-                    <label for="profile_image" style="font-weight: 600; color: #555;">Profile Image</label>
-                    <input type="file" id="profile_image" name="profile_image" accept="image/*"
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; font-size: 1rem;">
-
-                    <img src="{{ url_for('static', filename='profiles/' + user.image_path) if user.image_path else url_for('static', filename='profiles/default.png') }}"
-                        alt="Profile Preview"
-                        style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
-
-                    <button type="submit"
-                        style="background-color: #bad9fc; color: #000; padding: 10px 15px; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer;">Save</button>
+    
+            <div class="edit-modal-body">
+                <form method="POST" action="{{ url_for('edit_patient', user_id=user.id) }}" enctype="multipart/form-data" class="edit-form">
+                    
+                    <div class="edit-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" value="{{ user.name }}" required>
+                    </div>
+    
+                    <div class="edit-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" value="{{ user.email }}" required>
+                    </div>
+    
+                    <div class="edit-group">
+                        <label for="number">Number</label>
+                        <input type="text" name="number" value="{{ user.number }}" required>
+                    </div>
+    
+                    <div class="edit-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" name="dob" value="{{ user.dob }}">
+                    </div>
+    
+                    <div class="edit-group">
+                        <label for="profile_image">Profile Image</label>
+                        <input type="file" id="profile_image" name="profile_image" accept="image/*">
+                    </div>
+    
+                    <div class="edit-group">
+                        <img src="{{ url_for('static', filename='profiles/' + user.image_path) if user.image_path else url_for('static', filename='profiles/default.png') }}"
+                             alt="Profile Preview">
+                    </div>
+    
+                    <button type="submit" class="edit-submit-btn">Save</button>
                 </form>
-
             </div>
         </div>
     </div>
+    
 
 
 
@@ -230,91 +614,90 @@
 
 
 
-    <div class="modal" id="addPrescriptionModal{{ loop.index }}"
-        style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5);">
-        <div class="modal-content"
-            style="background-color: #c6dff4; margin: 5% auto; padding: 30px; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);">
+    <!-- Updated Modal HTML -->
+<!-- Updated Modal HTML -->
+<div class="custom-modal" id="addPrescriptionModal{{ loop.index }}">
+    <div class="custom-modal-content">
+        <div class="custom-modal-header">
+            <h5 class="custom-modal-title">Add Prescription for {{ user.name }}</h5>
+            <button class="custom-btn-close" onclick="closeModal('addPrescriptionModal{{ loop.index }}')">&times;</button>
+        </div>
 
-            <div class="modal-header"
-                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h5 class="modal-title" style="font-size: 1.25rem; color: #333; margin: 0;">Add Prescription for {{
-                    user.name }}</h5>
-                <button class="btn-close" onclick="closeModal('addPrescriptionModal{{ loop.index }}')"
-                    style="background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer;">&times;</button>
-            </div>
+        <div class="custom-modal-body">
+            <form method="POST" action="{{ url_for('add_prescription', user_id=user.id) }}" class="prescription-form">
+                <div class="form-group">
+                    <input type="text" name="medicine" required />
+                    <label>Medicine</label>
+                </div>
 
-            <div class="modal-body">
-                <form method="POST" action="{{ url_for('add_prescription', user_id=user.id) }}"
-                    style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="form-group">
+                    <input type="text" name="dosage" required />
+                    <label>Dosage</label>
+                </div>
 
-                    <label for="medicine" style="font-weight: 600; color: #555;">Medicine</label>
-                    <input type="text" name="medicine"
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; font-size: 1rem;">
+                <div class="form-group">
+                    <textarea name="notes" rows="4" required></textarea>
+                    <label>Notes</label>
+                </div>
 
-                    <label for="dosage" style="font-weight: 600; color: #555;">Dosage</label>
-                    <input type="text" name="dosage"
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; font-size: 1rem;">
-
-                    <label for="notes" style="font-weight: 600; color: #555;">Notes</label>
-                    <textarea name="notes"
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; font-size: 1rem; height: 100px;"></textarea>
-
-                    <button type="submit"
-                        style="background-color: #a0e6b8; color: #000; padding: 10px 15px; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer;">Add
-                        Prescription</button>
-
-
-                </form>
-            </div>
+                <button type="submit" class="submit-btn">Add Prescription</button>
+            </form>
         </div>
     </div>
+</div>
 
 
 
-    <div class="modal" id="viewPrescriptionModal{{ loop.index }}">
-        <div class="modal-content" style="background-color: #c5fad8;">
-            <div class="modal-header">
-                <h5 class="modal-title">View Prescriptions for {{ user.name }}</h5>
-                <button class="btn-close" onclick="closeModal('viewPrescriptionModal{{ loop.index }}')">&times;</button>
-            </div>
-            <div class="modal-body">
-                {% set user_prescriptions = detection_map.get(user.email, []) %}
-                {% if user_prescriptions %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Medicine</th>
-                            <th>Dosage</th>
-                            <th>Notes</th>
-                            <th>Date</th>
-                            <th> Download</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for prescription in user_prescriptions %}
-                        <tr>
-                            <td>{{ loop.index }}</td>
-                            <td>{{ prescription.medicine }}</td>
-                            <td>{{ prescription.dosage }}</td>
-                            <td>{{ prescription.notes }}</td>
-                            <td>{{ prescription.created_at }}</td>
-                            <td> <a href="{{ url_for('download_prescription', user_id=user.id) }}"
-                                    class="custom-download-btn" target="_blank">
-                                    Download PDF
-                                </a>
 
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                <p>No prescriptions found for this patient.</p>
-                {% endif %}
-            </div>
+
+<div class="modal" id="viewPrescriptionModal{{ loop.index }}">
+    <div class="modal-content" style="background-color: black;">
+        <div class="modal-header">
+            <h5 class="modal-title" style="color: white;">View Prescriptions for {{ user.name }}</h5>
+            <button class="btn-close" style="color: white !important; font-size: 24px; background: none; border: none; cursor: pointer;" 
+    onclick="closeModal('viewPrescriptionModal{{ loop.index }}')">&times;</button>
+
+        </div>
+        <div class="modal-body">
+            {% set user_prescriptions = detection_map.get(user.email, []) %}
+            {% if user_prescriptions %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Medicine</th>
+                        <th>Dosage</th>
+                        <th>Notes</th>
+                        <th>Date</th>
+                        <th> Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prescription in user_prescriptions %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ prescription.medicine }}</td>
+                        <td>{{ prescription.dosage }}</td>
+                        <td>{{ prescription.notes }}</td>
+                        <td>{{ prescription.created_at }}</td>
+                        <td> <a href="{{ url_for('download_prescription', user_id=user.id) }}"
+                                class="custom-download-btn" target="_blank">
+                                Download PDF
+                            </a>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No prescriptions found for this patient.</p>
+            {% endif %}
         </div>
     </div>
+</div>
+  
+
     <script>
 
         function openModal(id) {

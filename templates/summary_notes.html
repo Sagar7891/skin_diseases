@@ -4,21 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <title>Summarized Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-box {
+            background-color: white !important; /* Transparent white */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            margin-top: 50px;
+            margin-bottom: 10px;
+            color: black;
+        }
+
+        .summary-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: black;
+        }
+
+        p {
+            white-space: pre-line;
+            color: black !important;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .main-box {
+                padding: 20px 15px;
+            }
+
+            .back-link {
+                font-size: 14px;
+                top: 10px;
+                left: 15px;
+            }
+
+            h2 {
+                margin-top: 40px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h2>Original Notes:</h2>
-    <p style="white-space: pre-line;">{{ notes }}</p>
+    <div class="main-box">
+        <a href="{{ url_for('doctor_users') }}" class="back-link">
+            <span style="display: inline-flex; align-items: center; color: blue;">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20" style="margin-right: 5px;">
+                    <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" fill="none" />
+                </svg>
+                Back
+            </span>
+        </a>
+        
 
-    <hr>
+        <h2>Original Notes:</h2>
+        <p>{{ notes }}</p>
 
-    <h2>AI-Generated Summary (2 lines):</h2>
-    <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
-        {{ summary }}
+        <h2>Summary:</h2>
+        <div class="summary-box">
+            {{ summary }}
+        </div>
     </div>
-
-    <br>
-    <a href="{{ url_for('doctor_users') }}">⬅️ Back to Dashboard</a>
 </body>
 
 </html>
