@@ -11,426 +11,453 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Bootstrap + Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-<!-- Custom Styles -->
-<style>
-    .glass-card {
-        background: rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        color: #ffffff;
-        border-radius: 20px;
-        padding: 20px;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 8px 16px rgba(0, 255, 255, 0.2);
-    }
-
-    .glass-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 25px rgba(0, 255, 255, 0.4);
-    }
-
-    .profile-pic {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #00d1ff;
-    }
-
-    .user-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 15px;
-    }
-
-    .user-name {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #00d1ff;
-    }
-
-    .index-badge {
-        background: #00d1ff;
-        color: #000;
-        font-weight: bold;
-        padding: 5px 10px;
-        border-radius: 1rem;
-    }
-
-    .icon-btn {
-        border: 1px solid #00d1ff;
-        color: #00d1ff;
-        background: transparent;
-        transition: 0.3s;
-    }
-
-    .icon-btn:hover {
-        background: #00d1ff;
-        color: #000;
-    }
-
-    .tooltip-inner {
-        background-color: #00d1ff !important;
-        color: black;
-    }
-
-    .tooltip.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before {
-        border-top-color: #00d1ff !important;
-    }
-
-    a.btn {
-        padding: 6px 12px;
-    }
-</style>
+    <!-- Custom Styles -->
     <style>
-        body{
+        .glass-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 8px 16px rgba(0, 255, 255, 0.2);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 255, 255, 0.4);
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #00d1ff;
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00d1ff;
+        }
+
+        .index-badge {
+            background: #00d1ff;
+            color: #000;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 1rem;
+        }
+
+        .icon-btn {
+            border: 1px solid #00d1ff;
+            color: #00d1ff;
+            background: transparent;
+            transition: 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #00d1ff;
+            color: #000;
+        }
+
+        .tooltip-inner {
+            background-color: #00d1ff !important;
+            color: black;
+        }
+
+        .tooltip.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before {
+            border-top-color: #00d1ff !important;
+        }
+
+        a.btn {
+            padding: 6px 12px;
+        }
+    </style>
+    <style>
+        body {
             background-image: url('../static/images/background_main1.jpg');
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center center;
-            background-attachment: fixed; /* optional: makes background fixed during scroll */
+            background-attachment: fixed;
+            /* optional: makes background fixed during scroll */
         }
     </style>
     <style>
-.custom-modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    overflow: auto;
-    transition: all 0.3s ease-in-out;
-}
+        .custom-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            overflow: auto;
+            transition: all 0.3s ease-in-out;
+        }
 
-.custom-modal-content {
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    margin: 5% auto;
-    padding: 30px;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
-    animation: fadeIn 0.4s ease-in-out;
-}
+        .custom-modal-content {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
+            animation: fadeIn 0.4s ease-in-out;
+        }
 
-@keyframes fadeIn {
-    from { transform: translateY(-30px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
+        @keyframes fadeIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
 
-.custom-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-.custom-modal-title {
-    margin: 0;
-    font-size: 1.4rem;
-    color: white;
-}
+        .custom-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-.custom-btn-close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #aaa;
-    cursor: pointer;
-    transition: color 0.3s;
-}
+        .custom-modal-title {
+            margin: 0;
+            font-size: 1.4rem;
+            color: white;
+        }
 
-.custom-btn-close:hover {
-    color: #fff;
-}
+        .custom-btn-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
 
-.prescription-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+        .custom-btn-close:hover {
+            color: #fff;
+        }
 
-.form-group {
-    position: relative;
-}
+        .prescription-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid white;
-    border-radius: 10px;
-    color: white;
-    font-size: 1rem;
-    outline: none;
-}
+        .form-group {
+            position: relative;
+        }
 
-.form-group label {
-    position: absolute;
-    top: -10px;
-    left: 12px;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 0 5px;
-    font-size: 0.9rem;
-    color: white;
-    pointer-events: none;
-}
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid white;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
 
-.submit-btn {
-    background: linear-gradient(135deg, #00d1ff, #00e6b8);
-    color: #000;
-    padding: 12px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-}
+        .form-group label {
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0 5px;
+            font-size: 0.9rem;
+            color: white;
+            pointer-events: none;
+        }
 
-.submit-btn:hover {
-    background: linear-gradient(135deg, #00f0ff, #00ffa2);
-}
+        .submit-btn {
+            background: linear-gradient(135deg, #00d1ff, #00e6b8);
+            color: #000;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
 
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #00f0ff, #00ffa2);
+        }
     </style>
 
     <style>
         .edit-modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(4px);
-    overflow-y: auto;
-}
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            overflow-y: auto;
+        }
 
-.edit-modal-content {
-    background: #000;
-    color: white;
-    margin: 5% auto;
-    padding: 30px;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 520px;
-    box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2);
-    animation: slideFade 0.4s ease-in-out;
-}
+        .edit-modal-content {
+            background: #000;
+            color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 520px;
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2);
+            animation: slideFade 0.4s ease-in-out;
+        }
 
-@keyframes slideFade {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
+        @keyframes slideFade {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
 
-.edit-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-.edit-modal-title {
-    font-size: 1.4rem;
-    color: #00f0ff;
-}
+        .edit-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
 
-.edit-modal-close {
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    color: #999;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-.edit-modal-close:hover {
-    color: #fff;
-}
+        .edit-modal-title {
+            font-size: 1.4rem;
+            color: #00f0ff;
+        }
 
-.edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+        .edit-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
 
-.edit-group label {
-    font-weight: 600;
-    color: #ccc;
-    margin-bottom: 5px;
-    display: block;
-}
+        .edit-modal-close:hover {
+            color: #fff;
+        }
 
-.edit-group input[type="text"],
-.edit-group input[type="email"],
-.edit-group input[type="date"],
-.edit-group input[type="file"],
-.edit-group textarea {
-    width: 100%;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid #444;
-    border-radius: 10px;
-    color: white;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s;
-}
+        .edit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-.edit-group input:focus {
-    border-color: #00f0ff;
-}
+        .edit-group label {
+            font-weight: 600;
+            color: #ccc;
+            margin-bottom: 5px;
+            display: block;
+        }
 
-.edit-group img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid #00f0ff;
-    margin-top: 5px;
-}
+        .edit-group input[type="text"],
+        .edit-group input[type="email"],
+        .edit-group input[type="date"],
+        .edit-group input[type="file"],
+        .edit-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #444;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
 
-.edit-submit-btn {
-    background: linear-gradient(135deg, #00f0ff, #00ffa2);
-    color: #000;
-    padding: 12px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
+        .edit-group input:focus {
+            border-color: #00f0ff;
+        }
 
-.edit-submit-btn:hover {
-    background: linear-gradient(135deg, #00ffa2, #00f0ff);
-}
+        .edit-group img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #00f0ff;
+            margin-top: 5px;
+        }
 
+        .edit-submit-btn {
+            background: linear-gradient(135deg, #00f0ff, #00ffa2);
+            color: #000;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .edit-submit-btn:hover {
+            background: linear-gradient(135deg, #00ffa2, #00f0ff);
+        }
     </style>
     <style>
         .modal-view {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(2px);
-  overflow-y: auto;
-}
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(2px);
+            overflow-y: auto;
+        }
 
-.modal-view-content {
-  background-color: #000; /* solid black */
-  color: #fff;
-  margin: 5% auto;
-  padding: 30px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 800px;
-  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
-  animation: slideIn 0.3s ease-out;
-}
+        .modal-view-content {
+            background-color: #000;
+            /* solid black */
+            color: #fff;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.3s ease-out;
+        }
 
-@keyframes slideIn {
-  from { transform: translateY(50px); opacity: 1; }
-  to   { transform: translateY(0); opacity: 1; }
-}
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 1;
+            }
 
-.modal-view-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #333;
-  margin-bottom: 20px;
-}
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-.modal-view-title {
-  font-size: 1.4rem;
-  color: #fff;
-  margin: 0;
-}
+        .modal-view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+        }
 
-.modal-view-close {
-  font-size: 2rem;
-  color: #888;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-.modal-view-close:hover {
-  color: #fff;
-}
+        .modal-view-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin: 0;
+        }
 
-.modal-view-body {
-  font-size: 1rem;
-  color: #ddd;
-}
+        .modal-view-close {
+            font-size: 2rem;
+            color: #888;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
 
-.modal-view-no-data {
-  text-align: center;
-  color: #aaa;
-  font-style: italic;
-  padding: 20px;
-}
+        .modal-view-close:hover {
+            color: #fff;
+        }
 
-.modal-view-table-container {
-  overflow-x: auto;
-}
+        .modal-view-body {
+            font-size: 1rem;
+            color: #ddd;
+        }
 
-.modal-view-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #000; /* Black by default */
-  border: 1px solid #333;
-  color: #fff;
-}
+        .modal-view-no-data {
+            text-align: center;
+            color: #aaa;
+            font-style: italic;
+            padding: 20px;
+        }
 
-.modal-view-table th,
-.modal-view-table td {
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid #333;
-}
+        .modal-view-table-container {
+            overflow-x: auto;
+        }
 
-.modal-view-table th {
-  background-color: #111;
-  color: #00f7ff;
-  font-weight: 600;
-}
+        .modal-view-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #000;
+            /* Black by default */
+            border: 1px solid #333;
+            color: #fff;
+        }
 
-.modal-view-table tr:hover {
-  background-color: #111; /* Slightly lighter black */
-}
+        .modal-view-table th,
+        .modal-view-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
 
-.modal-view-download-btn {
-  display: inline-block;
-  padding: 6px 12px;
-  background: transparent;
-  color: #00f7ff;
-  border: 1px solid #00f7ff;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-}
+        .modal-view-table th {
+            background-color: #111;
+            color: #00f7ff;
+            font-weight: 600;
+        }
 
+        .modal-view-table tr:hover {
+            background-color: #111;
+            /* Slightly lighter black */
+        }
 
-
+        .modal-view-download-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background: transparent;
+            color: #00f7ff;
+            border: 1px solid #00f7ff;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-warning" href="{{ url_for('doctor_dashboard') }}" style="color: white !important;">Doctor Dashboard</a>
+            <a class="navbar-brand fw-bold text-warning" href="{{ url_for('doctor_dashboard') }}"
+                style="color: white !important;">Doctor Dashboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -492,35 +519,42 @@
                             <span class="user-name" style="color: white;">{{ user.name }}</span>
                             <!--<span class="index-badge">#{{ loop.index }}</span>-->
                         </div>
-        
+
                         <!-- Profile Pic -->
                         <div class="mb-3 text-center">
                             <img src="{{ url_for('static', filename='profiles/' + user.image_path if user.image_path else 'profiles/default.png') }}"
-                                 alt="Profile" class="profile-pic">
+                                alt="Profile" class="profile-pic">
                         </div>
-        
+
                         <!-- User Info -->
                         <p><strong>Email:</strong> {{ user.email }}</p>
                         <p><strong>Number:</strong> {{ user.number }}</p>
-        
+
                         <!-- Action Buttons -->
                         <div class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
-                            <button class="btn icon-btn" onclick="toggleRecording('{{ user.id }}')" data-bs-toggle="tooltip" title="Record">
+                            <button class="btn icon-btn" id="recordBtn{{ user.id }}"
+                                onclick="toggleRecording('{{ user.id }}')" data-bs-toggle="tooltip" title="Record">
                                 <i class="bi bi-mic-fill"></i>
                             </button>
-                            <button class="btn icon-btn" onclick="openModal('addPrescriptionModal{{ loop.index }}')" data-bs-toggle="tooltip" title="Add Prescription">
+
+                            <button class="btn icon-btn" onclick="openModal('addPrescriptionModal{{ loop.index }}')"
+                                data-bs-toggle="tooltip" title="Add Prescription">
                                 <i class="bi bi-plus-circle"></i>
                             </button>
-                            <button class="btn icon-btn" onclick="openModal('viewPrescriptionModal{{ loop.index }}')" data-bs-toggle="tooltip" title="View Prescription">
+                            <button class="btn icon-btn" onclick="openModal('viewPrescriptionModal{{ loop.index }}')"
+                                data-bs-toggle="tooltip" title="View Prescription">
                                 <i class="bi bi-eye-fill"></i>
                             </button>
-                            <button class="btn icon-btn" onclick="openModal('editModal{{ loop.index }}')" data-bs-toggle="tooltip" title="Edit">
+                            <button class="btn icon-btn" onclick="openModal('editModal{{ loop.index }}')"
+                                data-bs-toggle="tooltip" title="Edit">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
-                            <button class="btn icon-btn" onclick="openModal('deleteModal{{ loop.index }}')" data-bs-toggle="tooltip" title="Delete">
+                            <button class="btn icon-btn" onclick="openModal('deleteModal{{ loop.index }}')"
+                                data-bs-toggle="tooltip" title="Delete">
                                 <i class="bi bi-trash-fill"></i>
                             </button>
-                            <a href="{{ url_for('summarize_notes', user_id=user['id']) }}" class="btn icon-btn" data-bs-toggle="tooltip" title="Summarize Notes">
+                            <a href="{{ url_for('summarize_notes', user_id=user['id']) }}" class="btn icon-btn"
+                                data-bs-toggle="tooltip" title="Summarize Notes">
                                 <i class="bi bi-journal-text"></i>
                             </a>
                         </div>
@@ -529,7 +563,7 @@
                 {% endfor %}
             </div>
         </div>
-        
+
         <!-- Enable Bootstrap Tooltips -->
         <script>
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -537,374 +571,414 @@
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         </script>
-        
-
-
-    {% for user in users %}
-
-    <div class="edit-modal" id="editModal{{ loop.index }}" aria-hidden="true">
-        <div class="edit-modal-content">
-            <div class="edit-modal-header">
-                <h5 class="edit-modal-title">Edit Patient - {{ user.name }}</h5>
-                <button class="edit-modal-close" onclick="closeModal('editModal{{ loop.index }}')">&times;</button>
-            </div>
-    
-            <div class="edit-modal-body">
-                <form method="POST" action="{{ url_for('edit_patient', user_id=user.id) }}" enctype="multipart/form-data" class="edit-form">
-                    
-                    <div class="edit-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" value="{{ user.name }}" required>
-                    </div>
-    
-                    <div class="edit-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" value="{{ user.email }}" required>
-                    </div>
-    
-                    <div class="edit-group">
-                        <label for="number">Number</label>
-                        <input type="text" name="number" value="{{ user.number }}" required>
-                    </div>
-    
-                    <div class="edit-group">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" name="dob" value="{{ user.dob }}">
-                    </div>
-    
-                    <div class="edit-group">
-                        <label for="profile_image">Profile Image</label>
-                        <input type="file" id="profile_image" name="profile_image" accept="image/*">
-                    </div>
-    
-                    <div class="edit-group">
-                        <img src="{{ url_for('static', filename='profiles/' + user.image_path) if user.image_path else url_for('static', filename='profiles/default.png') }}"
-                             alt="Profile Preview">
-                    </div>
-    
-                    <button type="submit" class="edit-submit-btn">Save</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    
 
 
 
-    <div class="modal" id="deleteModal{{ loop.index }}"
-        style="display:none; position:fixed; z-index:999; left:0; top:50px; width:100%; height:100%; background-color:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
-        <div class="modal-content"
-            style="background-color:#fdf4ce; margin:auto; border-radius:10px; padding:20px; width:100%; max-width:500px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
-            <div class="modal-header"
-                style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #ddd; padding-bottom:10px;">
-                <h5 class="modal-title" style="font-size:1.2rem; font-weight:600;">Delete Patient - {{ user.name }}</h5>
-                <button class="btn-close" onclick="closeModal('deleteModal{{ loop.index }}')"
-                    style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#aaa;"
-                    onmouseover="this.style.color='#000'" onmouseout="this.style.color='#aaa'">&times;</button>
-            </div>
-            <div class="modal-body" style="padding-top:15px;">
-                <form method="POST" action="{{ url_for('delete_patient', user_id=user.id) }}">
-                    <p style="font-size:1rem; margin-bottom:20px;">Are you sure you want to delete this patient?</p>
-                    <button type="submit"
-                        style="background-color:#dc3545; color:#fff; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
+        {% for user in users %}
 
-
-
-    <!-- Updated Modal HTML -->
-<!-- Updated Modal HTML -->
-<div class="custom-modal" id="addPrescriptionModal{{ loop.index }}">
-    <div class="custom-modal-content">
-        <div class="custom-modal-header">
-            <h5 class="custom-modal-title">Add Prescription for {{ user.name }}</h5>
-            <button class="custom-btn-close" onclick="closeModal('addPrescriptionModal{{ loop.index }}')">&times;</button>
-        </div>
-
-        <div class="custom-modal-body">
-            <form method="POST" action="{{ url_for('add_prescription', user_id=user.id) }}" class="prescription-form">
-                <div class="form-group">
-                    <input type="text" name="medicine" required />
-                    <label>Medicine</label>
+        <div class="edit-modal" id="editModal{{ loop.index }}" aria-hidden="true">
+            <div class="edit-modal-content">
+                <div class="edit-modal-header">
+                    <h5 class="edit-modal-title">Edit Patient - {{ user.name }}</h5>
+                    <button class="edit-modal-close" onclick="closeModal('editModal{{ loop.index }}')">&times;</button>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" name="dosage" required />
-                    <label>Dosage</label>
+                <div class="edit-modal-body">
+                    <form method="POST" action="{{ url_for('edit_patient', user_id=user.id) }}"
+                        enctype="multipart/form-data" class="edit-form">
+
+                        <div class="edit-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" value="{{ user.name }}" required>
+                        </div>
+
+                        <div class="edit-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" value="{{ user.email }}" required>
+                        </div>
+
+                        <div class="edit-group">
+                            <label for="number">Number</label>
+                            <input type="text" name="number" value="{{ user.number }}" required>
+                        </div>
+
+                        <div class="edit-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" name="dob" value="{{ user.dob }}">
+                        </div>
+
+                        <div class="edit-group">
+                            <label for="profile_image">Profile Image</label>
+                            <input type="file" id="profile_image" name="profile_image" accept="image/*">
+                        </div>
+
+                        <div class="edit-group">
+                            <img src="{{ url_for('static', filename='profiles/' + user.image_path) if user.image_path else url_for('static', filename='profiles/default.png') }}"
+                                alt="Profile Preview">
+                        </div>
+
+                        <button type="submit" class="edit-submit-btn">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="modal" id="deleteModal{{ loop.index }}"
+            style="display:none; position:fixed; z-index:999; left:0; top:50px; width:100%; height:100%; background-color:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+            <div class="modal-content"
+                style="background-color:#fdf4ce; margin:auto; border-radius:10px; padding:20px; width:100%; max-width:500px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+                <div class="modal-header"
+                    style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #ddd; padding-bottom:10px;">
+                    <h5 class="modal-title" style="font-size:1.2rem; font-weight:600;">Delete Patient - {{ user.name }}
+                    </h5>
+                    <button class="btn-close" onclick="closeModal('deleteModal{{ loop.index }}')"
+                        style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#aaa;"
+                        onmouseover="this.style.color='#000'" onmouseout="this.style.color='#aaa'">&times;</button>
+                </div>
+                <div class="modal-body" style="padding-top:15px;">
+                    <form method="POST" action="{{ url_for('delete_patient', user_id=user.id) }}">
+                        <p style="font-size:1rem; margin-bottom:20px;">Are you sure you want to delete this patient?</p>
+                        <button type="submit"
+                            style="background-color:#dc3545; color:#fff; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Updated Modal HTML -->
+        <!-- Updated Modal HTML -->
+        <div class="custom-modal" id="addPrescriptionModal{{ loop.index }}">
+            <div class="custom-modal-content">
+                <div class="custom-modal-header">
+                    <h5 class="custom-modal-title">Add Prescription for {{ user.name }}</h5>
+                    <button class="custom-btn-close"
+                        onclick="closeModal('addPrescriptionModal{{ loop.index }}')">&times;</button>
                 </div>
 
-                <div class="form-group">
-                    <textarea name="notes" rows="4" required></textarea>
-                    <label>Notes</label>
+                <div class="custom-modal-body">
+                    <form method="POST" action="{{ url_for('add_prescription', user_id=user.id) }}"
+                        class="prescription-form">
+                        <div class="form-group">
+                            <input type="text" name="medicine" required />
+                            <label>Medicine</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="dosage" required />
+                            <label>Dosage</label>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name="notes" rows="4" required></textarea>
+                            <label>Notes</label>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Add Prescription</button>
+                    </form>
                 </div>
-
-                <button type="submit" class="submit-btn">Add Prescription</button>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
 
 
 
 
 
-<div class="modal" id="viewPrescriptionModal{{ loop.index }}">
-    <div class="modal-content" style="background-color: black;">
-        <div class="modal-header">
-            <h5 class="modal-title" style="color: white;">View Prescriptions for {{ user.name }}</h5>
-            <button class="btn-close" style="color: white !important; font-size: 24px; background: none; border: none; cursor: pointer;" 
-    onclick="closeModal('viewPrescriptionModal{{ loop.index }}')">&times;</button>
+        <div class="modal" id="viewPrescriptionModal{{ loop.index }}">
+            <div class="modal-content" style="background-color: black;">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color: white;">View Prescriptions for {{ user.name }}</h5>
+                    <button class="btn-close"
+                        style="color: white !important; font-size: 24px; background: none; border: none; cursor: pointer;"
+                        onclick="closeModal('viewPrescriptionModal{{ loop.index }}')">&times;</button>
 
+                </div>
+                <div class="modal-body">
+                    {% set user_prescriptions = detection_map.get(user.email, []) %}
+                    {% if user_prescriptions %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Medicine</th>
+                                <th>Dosage</th>
+                                <th>Notes</th>
+                                <th>Date</th>
+                                <th> Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for prescription in user_prescriptions %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ prescription.medicine }}</td>
+                                <td>{{ prescription.dosage }}</td>
+                                <td>{{ prescription.notes }}</td>
+                                <td>{{ prescription.created_at }}</td>
+                                <td> <a href="{{ url_for('download_prescription', user_id=user.id) }}"
+                                        class="custom-download-btn" target="_blank">
+                                        Download PDF
+                                    </a>
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No prescriptions found for this patient.</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            {% set user_prescriptions = detection_map.get(user.email, []) %}
-            {% if user_prescriptions %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Medicine</th>
-                        <th>Dosage</th>
-                        <th>Notes</th>
-                        <th>Date</th>
-                        <th> Download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for prescription in user_prescriptions %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ prescription.medicine }}</td>
-                        <td>{{ prescription.dosage }}</td>
-                        <td>{{ prescription.notes }}</td>
-                        <td>{{ prescription.created_at }}</td>
-                        <td> <a href="{{ url_for('download_prescription', user_id=user.id) }}"
-                                class="custom-download-btn" target="_blank">
-                                Download PDF
-                            </a>
-
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-            <p>No prescriptions found for this patient.</p>
-            {% endif %}
-        </div>
-    </div>
-</div>
-  
-
-    <script>
-
-        function openModal(id) {
-            const el = document.getElementById(id);
-            if (el) el.style.display = 'block';
-        }
-
-        function closeModal(id) {
-            const el = document.getElementById(id);
-            if (el) el.style.display = 'none';
-        }
-
-        window.onclick = function (event) {
-            document.querySelectorAll('.modal').forEach(modal => {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            });
-        }
 
 
-        function closeAlert(button) {
-            const alert = button.closest('.alert');
-            if (alert) alert.style.display = 'none';
-        }
+        <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const searchInput = document.getElementById("patientSearch");
-            if (searchInput) {
-                searchInput.addEventListener("keyup", function () {
-                    const input = this.value.toLowerCase();
-                    const rows = document.querySelectorAll("table tbody tr");
-                    rows.forEach(function (row) {
-                        const text = row.innerText.toLowerCase();
-                        row.style.display = text.includes(input) ? "" : "none";
-                    });
+            function openModal(id) {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'block';
+            }
+
+            function closeModal(id) {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            }
+
+            window.onclick = function (event) {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = "none";
+                    }
                 });
             }
 
-            document.querySelectorAll("form[id^='editForm']").forEach(form => {
-                const formKey = 'cached_patient_' + form.id;
 
+            function closeAlert(button) {
+                const alert = button.closest('.alert');
+                if (alert) alert.style.display = 'none';
+            }
 
-                const cached = localStorage.getItem(formKey);
-                if (cached) {
-                    const data = JSON.parse(cached);
-                    for (const key in data) {
-                        if (form.elements[key]) form.elements[key].value = data[key];
-                    }
-                    console.log("Cached form loaded for", formKey);
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.getElementById("patientSearch");
+                if (searchInput) {
+                    searchInput.addEventListener("keyup", function () {
+                        const input = this.value.toLowerCase();
+                        const rows = document.querySelectorAll("table tbody tr");
+                        rows.forEach(function (row) {
+                            const text = row.innerText.toLowerCase();
+                            row.style.display = text.includes(input) ? "" : "none";
+                        });
+                    });
                 }
 
-
-                form.addEventListener('submit', function (e) {
-                    if (!navigator.onLine) {
-                        e.preventDefault();
-                        const data = {};
-                        for (const element of form.elements) {
-                            if (element.name && element.type !== 'file') {
-                                data[element.name] = element.value;
-                            }
-                        }
-                        localStorage.setItem(formKey, JSON.stringify(data));
-                        alert("No internet. Data cached locally and will sync when online.");
-                    }
-                });
-            });
-
-
-            window.addEventListener('online', () => {
                 document.querySelectorAll("form[id^='editForm']").forEach(form => {
                     const formKey = 'cached_patient_' + form.id;
-                    const cachedData = localStorage.getItem(formKey);
-                    if (cachedData) {
 
-                        const userId = form.getAttribute("data-user-id");
-                        fetch(`/edit_patient/${userId}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: cachedData
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    localStorage.removeItem(formKey);
-                                    alert("Your form data has been successfully submitted.");
-                                } else {
-                                    alert("Error syncing form data.");
-                                }
-                            })
-                            .catch(error => {
-                                console.error("Error submitting cached form data", error);
-                            });
+
+                    const cached = localStorage.getItem(formKey);
+                    if (cached) {
+                        const data = JSON.parse(cached);
+                        for (const key in data) {
+                            if (form.elements[key]) form.elements[key].value = data[key];
+                        }
+                        console.log("Cached form loaded for", formKey);
                     }
+
+
+                    form.addEventListener('submit', function (e) {
+                        if (!navigator.onLine) {
+                            e.preventDefault();
+                            const data = {};
+                            for (const element of form.elements) {
+                                if (element.name && element.type !== 'file') {
+                                    data[element.name] = element.value;
+                                }
+                            }
+                            localStorage.setItem(formKey, JSON.stringify(data));
+                            alert("No internet. Data cached locally and will sync when online.");
+                        }
+                    });
+                });
+
+
+                window.addEventListener('online', () => {
+                    document.querySelectorAll("form[id^='editForm']").forEach(form => {
+                        const formKey = 'cached_patient_' + form.id;
+                        const cachedData = localStorage.getItem(formKey);
+                        if (cachedData) {
+
+                            const userId = form.getAttribute("data-user-id");
+                            fetch(`/edit_patient/${userId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: cachedData
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        localStorage.removeItem(formKey);
+                                        alert("Your form data has been successfully submitted.");
+                                    } else {
+                                        alert("Error syncing form data.");
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error submitting cached form data", error);
+                                });
+                        }
+                    });
                 });
             });
-        });
-    </script>
+        </script>
 
 
 
-    {% endfor %}
+        {% endfor %}
 
-    <footer style="color: white !important;">
-        © 2025 <span style="color: white !important;">Autoimmune Skin Disease</span>
-    </footer>
-    
+        <footer style="color: white !important; margin-top:100% !important; position: sticky;">
+            © 2025 <span style="color: white !important;">Autoimmune Skin Disease</span>
+        </footer>
+        <script>
+            let recognitionMap = {};
+            let isRecordingMap = {};
+            let userInitiatedStopMap = {};
+            let speechDataMap = {};
 
-    <script>
-        let recognitionMap = {};
-        let isRecordingMap = {};
+            const numberWordsToDigits = {
+                'zero': 0, 'one': 1, 'to': 2, 'three': 3, 'four': 4,
+                'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9,
+                'ten': 10
+            };
 
-        function toggleRecording(patientId) {
-            const btn = document.getElementById(`recordBtn${patientId}`);
+            function toggleRecording(patientId) {
+                const btn = document.getElementById(`recordBtn${patientId}`);
+                if (!btn) {
+                    console.warn(`Button with id "recordBtn${patientId}" not found.`);
+                    return;
+                }
 
-            if (isRecordingMap[patientId]) {
-                recognitionMap[patientId].stop();
+                if (isRecordingMap[patientId]) {
+                    // User wants to stop and save
+                    userInitiatedStopMap[patientId] = true;
+                    isRecordingMap[patientId] = false;
+                    recognitionMap[patientId]?.stop();
+                } else {
+                    // Start recording
+                    startRecording(patientId);
+                    btn.innerHTML = '<i class="bi bi-stop-fill"></i>';
+                    btn.classList.remove('btn-outline-primary');
+                    btn.classList.add('btn-danger');
+                    isRecordingMap[patientId] = true;
+                    userInitiatedStopMap[patientId] = false;
+                    speechDataMap[patientId] = { medicine: '', dosage: '', notes: '' };
+                }
+            }
+
+            function startRecording(patientId) {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-US';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+                recognition.continuous = true;
+
+                recognitionMap[patientId] = recognition;
+                recognition.start();
+
+                recognition.onresult = function (event) {
+                    const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+                    console.log(`Transcript for patient ${patientId}:`, transcript);
+
+                    const medicineMatch = transcript.match(/medicine\s+(\w+)/i);
+                    const dosageMatch = transcript.match(/(?:dosage|dose|dosa|of)\s+([\w\.]+)/i);
+                    const notesMatch = transcript.match(/notes?\s+(.*)/i);
+
+                    const data = speechDataMap[patientId] || { medicine: '', dosage: '', notes: '' };
+
+                    if (medicineMatch) {
+                        data.medicine = medicineMatch[1];
+                    }
+                    if (dosageMatch) {
+                        let rawDosage = dosageMatch[1];
+                        data.dosage = numberWordsToDigits[rawDosage] !== undefined ? numberWordsToDigits[rawDosage] : rawDosage;
+                    }
+                    if (notesMatch) {
+                        data.notes = notesMatch[1];
+                    }
+
+                    speechDataMap[patientId] = data;
+
+                    console.log("Current input:", data);
+                };
+
+                recognition.onerror = function (event) {
+                    console.error('Recognition error:', event.error);
+                    alert('Voice recognition failed: ' + event.error);
+                    stopRecognitionUI(patientId);
+                };
+
+                recognition.onend = function () {
+                    if (userInitiatedStopMap[patientId]) {
+                        // Save to database
+                        const data = speechDataMap[patientId] || {};
+                        if (data.medicine && data.dosage) {
+                            fetch('/save-prescription', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    patient_id: patientId,
+                                    medicine: data.medicine,
+                                    dosage: data.dosage,
+                                    notes: data.notes
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    alert(data.message || data.error || "Prescription saved!");
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    alert('Failed to save prescription.');
+                                });
+                        } else {
+                            alert('Incomplete input. Please include at least medicine and dosage.');
+                        }
+
+                        stopRecognitionUI(patientId);
+                    } else {
+                        recognition.start(); // continue listening
+                    }
+                };
+            }
+
+            function stopRecognitionUI(patientId) {
+                const btn = document.getElementById(`recordBtn${patientId}`);
+                if (!btn) {
+                    console.warn(`Button with id "recordBtn${patientId}" not found.`);
+                    return;
+                }
                 btn.innerHTML = '<i class="bi bi-mic-fill"></i>';
                 btn.classList.remove('btn-danger');
                 btn.classList.add('btn-outline-primary');
                 isRecordingMap[patientId] = false;
-            } else {
-                startRecording(patientId);
-                btn.innerHTML = '<i class="bi bi-stop-fill"></i>';
-                btn.classList.remove('btn-outline-primary');
-                btn.classList.add('btn-danger');
-                isRecordingMap[patientId] = true;
             }
-        }
-
-        function startRecording(patientId) {
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'en-US';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-            recognition.continuous = true;
-
-            recognition.start();
-            recognitionMap[patientId] = recognition;
-
-            recognition.onresult = function (event) {
-                const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
-                console.log(`Transcript for patient ${patientId}:`, transcript);
-
-                const medicineMatch = transcript.match(/medicine\s+(\w+)/i);
-                const dosageMatch = transcript.match(/(?:dosage|dose|dosa|of)\s+([\d\.]+)/i);
-                const notesMatch = transcript.match(/notes?\s+(.*)/i);
-
-                const medicine = medicineMatch ? medicineMatch[1] : '';
-                const dosage = dosageMatch ? dosageMatch[1] : '';
-                const notes = notesMatch ? notesMatch[1] : '';
-
-                if (medicine && dosage) {
-                    fetch('/save-prescription', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            patient_id: patientId,
-                            medicine: medicine,
-                            dosage: dosage,
-                            notes: notes
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert(data.message || data.error);
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Failed to save prescription.');
-                        });
-                } else {
-                    console.warn('Incomplete voice input — not saving');
-                }
-            };
-
-            recognition.onerror = function (event) {
-                console.error('Recognition error:', event.error);
-                alert('Voice recognition failed: ' + event.error);
-                stopRecognitionUI(patientId);
-            };
-
-            recognition.onend = function () {
-                if (isRecordingMap[patientId]) {
-                    recognition.start();
-                } else {
-                    stopRecognitionUI(patientId);
-                }
-            };
-        }
-
-        function stopRecognitionUI(patientId) {
-            const btn = document.getElementById(`recordBtn${patientId}`);
-            btn.innerHTML = '<i class="bi bi-mic-fill"></i>';
-            btn.classList.remove('btn-danger');
-            btn.classList.add('btn-outline-primary');
-            isRecordingMap[patientId] = false;
-        }
-    </script>
+        </script>
 
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
 </body>
 
