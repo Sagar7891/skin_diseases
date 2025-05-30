@@ -3,7 +3,7 @@ from fileinput import filename
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
-#import pdfkit
+import pdfkit
 from flask import make_response
 import os
 from werkzeug.utils import secure_filename
@@ -23,7 +23,7 @@ app.secret_key = 'wverihdfuvuwi2482'
 # openai.api_key = "esecret_nqhhtffj88zp16fjcwpl33w8dh"
 # openai.api_base = "https://api.endpoints.anyscale.com/v1"
 # Initialize Groq client
-client = Groq(api_key="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")  # Replace with your actual key
+client = Groq(api_key="FIXME")  # Replace with your actual key
 
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
@@ -163,7 +163,7 @@ def user_download_prescription(prescription_id):
     conn.close()
 
     html = render_template('prescription_pdf_single.html', user=user, prescription=prescription)
-    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf')
     pdf = pdfkit.from_string(html, False, configuration=config)
 
 
