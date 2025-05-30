@@ -528,6 +528,9 @@ def download_prescription(user_id):
     return response
 
 
+
+
+
 @app.route('/doctor/edit_patient/<int:user_id>', methods=['GET', 'POST'])
 def edit_patient(user_id):
     if session.get('role') != 'doctor':
@@ -614,6 +617,23 @@ def add_prescription(user_id):
 
     conn.close()
     return redirect(url_for('doctor_users'))
+
+@app.route('/doctor/delete_prescription/<int:prescription_id>', methods=['POST'])
+def delete_prescription(prescription_id):
+    if session.get('role') != 'doctor':
+        flash("Unauthorized access", "danger")
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM prescriptions WHERE id = %s", (prescription_id,))
+    conn.commit()
+
+    conn.close()
+    flash('Prescription deleted successfully!', 'success')
+    return redirect(request.referrer or url_for('doctor_users'))
+
 
 @app.route('/doctor/view_prescriptions/<int:user_id>')
 def view_prescriptions(user_id):
