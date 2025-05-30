@@ -13,7 +13,8 @@ from torchvision import models, transforms
 from PIL import Image
 from groq import Groq
 import openai
-
+from deep_translator import GoogleTranslator
+from flask import Flask, request, jsonify
 #from googletrans import Translator, LANGUAGES
 # import openai
 app = Flask(__name__)
@@ -329,21 +330,26 @@ def detect():
                            treatment=treatment,
                            image_url=image_url)
 
+def translate_text(text, lang):
+    try:
+        if not text:
+            return ""
+        return GoogleTranslator(source='auto', target=lang).translate(text)
+    except Exception as e:
+        print(f"[Translation Error]: {e}")
+        return "[Translation Failed]"
 
 @app.route('/translate', methods=['POST'])
 def translate():
-    data = request.get_json()
-    lang = data.get('lang')
-    predect = data.get('predect')
-    description = data.get('description')
-    symptoms = data.get('symptoms')
-    treatment = data.get('treatment')
-    
-   
-    if lang not in LANGUAGES:
-        return jsonify({"error": "Invalid language code"}), 400
-    
-  
+    data = request.get_json(force=True)
+    print("Incoming translation request:", data)
+
+    lang = data.get('lang', 'en')
+    predect = data.get('predect', '')
+    description = data.get('description', '')
+    symptoms = data.get('symptoms', '')
+    treatment = data.get('treatment', '')
+
     try:
         translated_predect = translate_text(predect, lang)
         translated_description = translate_text(description, lang)
@@ -357,13 +363,9 @@ def translate():
             'treatment': translated_treatment
         })
     except Exception as e:
+        print("Translation error:", e)
         return jsonify({"error": str(e)}), 500
 
-def translate_text(text, lang):
-
-    translator = Translator()
-    translated = translator.translate(text, dest=lang)
-    return translated.text
 
 @app.route('/logout')
 def logout():
@@ -526,6 +528,9 @@ def download_prescription(user_id):
     return response
 
 
+
+
+
 @app.route('/doctor/edit_patient/<int:user_id>', methods=['GET', 'POST'])
 def edit_patient(user_id):
     if session.get('role') != 'doctor':
@@ -612,6 +617,23 @@ def add_prescription(user_id):
 
     conn.close()
     return redirect(url_for('doctor_users'))
+
+@app.route('/doctor/delete_prescription/<int:prescription_id>', methods=['POST'])
+def delete_prescription(prescription_id):
+    if session.get('role') != 'doctor':
+        flash("Unauthorized access", "danger")
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM prescriptions WHERE id = %s", (prescription_id,))
+    conn.commit()
+
+    conn.close()
+    flash('Prescription deleted successfully!', 'success')
+    return redirect(request.referrer or url_for('doctor_users'))
+
 
 @app.route('/doctor/view_prescriptions/<int:user_id>')
 def view_prescriptions(user_id):
