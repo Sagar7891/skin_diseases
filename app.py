@@ -24,7 +24,7 @@ app.secret_key = 'wverihdfuvuwi2482'
 # openai.api_key = "esecret_nqhhtffj88zp16fjcwpl33w8dh"
 # openai.api_base = "https://api.endpoints.anyscale.com/v1"
 # Initialize Groq client
-client = Groq(api_key="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")  # Replace with your actual key
+client = Groq(api_key="FIXME")  # Replace with your actual key
 
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
@@ -287,9 +287,15 @@ def predict(image):
 
     with torch.no_grad():
         outputs = model(image)
-        _, predicted = torch.max(outputs, 1)
+        probs = torch.nn.functional.softmax(outputs, dim=1)
+        confidence, predicted = torch.max(probs, 1)
+        # _, predicted = torch.max(outputs, 1)
+        if confidence.item() < 0.8:
+            return "No disease detected", "", "", ""
+        
         prediction = list(class_info.keys())[predicted.item()]
         info = class_info[prediction]
+
 
     return prediction, info['description'], info['symptoms'], info['treatment']
 
@@ -722,6 +728,35 @@ def summarize_notes(user_id):
     summary = completion.choices[0].message.content
 
     return render_template('summary_notes.html', summary=summary, notes=all_notes)
+
+
+import base64
+from io import BytesIO
+
+@app.route('/fake-detection', methods=['POST'])
+def fake_detection():
+    data = request.get_json()
+    if not data or 'image' not in data:
+        return jsonify({'error': 'No image data received'}), 400
+
+    # Optional: Decode image if needed (but not used further here)
+    image_data = data['image'].split(',')[1]
+    decoded = base64.b64decode(image_data)
+    img = Image.open(BytesIO(decoded))
+
+    # Fake response — DO NOT call model here
+    prediction = "No disease detected"
+    description = "The uploaded image does not show signs of a detectable skin disease."
+    symptoms = "None observed."
+    treatment = "No medical treatment required."
+
+    return jsonify({
+        'prediction': prediction,
+        'description': description,
+        'symptoms': symptoms,
+        'treatment': treatment
+    })
+
 if __name__ == '__main__':
     app.run(debug=True)
 

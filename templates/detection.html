@@ -247,7 +247,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('home') }}">Home</a>
                     </li>
-                    
+
                     {% if session.get('email') %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -283,14 +283,12 @@
             <div class="card-body">
                 <form action="{{ url_for('detect') }}" method="post" enctype="multipart/form-data" class="mb-0">
                     <div class="row align-items-end">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label" for="imageInput">Select Image</label>
                             <input type="file" id="imageInput" name="image" class="form-control" required />
                         </div>
-                        <div class="col-md-2 mt-3 mt-md-0">
-                            <button type="submit"
-                              style="
-                                width: 100%;
+                        <div class="col-md-2 mt-3 mt-md-0 d-grid">
+                            <button type="submit" style="
                                 background-color: #55595c;
                                 color: #e1e3e6;
                                 border: none;
@@ -300,24 +298,42 @@
                                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
                                 transition: background-color 0.3s ease, box-shadow 0.3s ease;
                                 cursor: pointer;
-                              "
-                              onmouseover="this.style.backgroundColor='#6c757d'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.5)';"
-                              onmouseout="this.style.backgroundColor='#55595c'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.4)';"
-                            >
-                              Upload & Detect
+                            " onmouseover="this.style.backgroundColor='#6c757d'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.5)';"
+                                onmouseout="this.style.backgroundColor='#55595c'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.4)';">
+                                Upload & Detect
                             </button>
-                          </div>
-                          
+                        </div>
+                        <div class="col-md-3 mt-3 mt-md-0 d-grid">
+                            <button id="startCameraBtn" class="btn btn-outline-secondary" type="button"
+                                style="height: 38px;">
+                                Start Webcam
+                            </button>
+                        </div>
+                        <div class="col-md-3 mt-3 mt-md-0 d-grid">
+                            <button id="captureBtn" class="btn btn-secondary" type="button"
+                                style="height: 38px; display: none;">
+                                Capture & Fake Detect
+                            </button>
+                        </div>
                     </div>
                 </form>
+
+                <div class="mt-3 d-flex justify-content-center">
+                    <video id="cameraStream" width="320" height="240" autoplay
+                        style="display: none; border: 2px solid #555; border-radius: 8px;"></video>
+                    <canvas id="snapshotCanvas" width="224" height="224" style="display:none;"></canvas>
+                </div>
+
             </div>
+
+
+
         </div>
 
         <div class="row">
 
             <div class="col-md-6 mb-4 d-flex align-items-stretch">
-                <div class="card w-100 shadow"
-                     style="
+                <div class="card w-100 shadow" style="
                        background-color: #1e1e1e;  /* very dark grey */
                        color: #f5f5f5;             /* soft white text */
                        border-radius: 12px;
@@ -325,8 +341,7 @@
                        border: 1px solid #444;
                        text-align: center;
                      ">
-                  <div class="card-header"
-                       style="
+                    <div class="card-header" style="
                          background-color: #2c2c2c; /* dark grey */
                          border-bottom: 1px solid #444;
                          padding: 1rem;
@@ -335,33 +350,30 @@
                          font-weight: 700;
                          font-size: 1.25rem;
                        ">
-                    Uploaded Image
-                  </div>
-                  <div class="card-body d-flex justify-content-center align-items-center"
-                       style="padding: 1.25rem; min-height: 280px;">
-                    {% if image_url %}
-                    <img src="{{ url_for('static', filename=image_url) }}" alt="Uploaded"
-                         class="img-fluid"
-                         style="max-height: 280px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);" />
-                    {% else %}
-                    <p style="color: #888; font-style: italic;">No image uploaded yet.</p>
-                    {% endif %}
-                  </div>
+                        Uploaded Image
+                    </div>
+                    <div class="card-body d-flex justify-content-center align-items-center"
+                        style="padding: 1.25rem; min-height: 280px;">
+                        {% if image_url %}
+                        <img src="{{ url_for('static', filename=image_url) }}" alt="Uploaded" class="img-fluid"
+                            style="max-height: 280px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);" />
+                        {% else %}
+                        <p style="color: #888; font-style: italic;">No image uploaded yet.</p>
+                        {% endif %}
+                    </div>
                 </div>
-              </div>
-              
+            </div>
+
 
             <div class="col-md-6 mb-4 d-flex align-items-stretch">
-                <div class="card w-100 shadow"
-                     style="
+                <div class="card w-100 shadow" style="
                        background-color: #1e1e1e;  /* very dark grey */
                        color: #f5f5f5;             /* soft white text */
                        border-radius: 12px;
                        box-shadow: 0 6px 15px rgba(0,0,0,0.7);
                        border: 1px solid #444;
                      ">
-                  <div class="card-header"
-                       style="
+                    <div class="card-header" style="
                          background-color: #2c2c2c; /* dark grey */
                          border-bottom: 1px solid #444;
                          padding: 1rem;
@@ -371,74 +383,70 @@
                          font-weight: 700;
                          font-size: 1.25rem;
                        ">
-                    Detection Result
-                  </div>
-                  <div class="card-body" style="padding: 1.25rem;">
-              
-                    {% if prediction %}
-                    <div class="text-center mb-3" style="margin-bottom: 1rem;">
-                      <button class="btn"
-                        style="
-                          border: 1.5px solid #888;
-                          background-color: transparent;
-                          color: #ddd;
-                          padding: 0.5rem 1rem;
-                          margin-right: 0.5rem;
-                          border-radius: 8px;
-                          font-weight: 600;
-                          cursor: pointer;
-                          transition: all 0.25s ease;
-                        "
-                        onmouseover="this.style.backgroundColor='#444'; this.style.color='#fff'; this.style.borderColor='#bbb';"
-                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ddd'; this.style.borderColor='#888';"
-                        onclick="translateText('en')">English</button>
-              
-                      <button class="btn"
-                        style="
-                          border: 1.5px solid #888;
-                          background-color: transparent;
-                          color: #ddd;
-                          padding: 0.5rem 1rem;
-                          margin-right: 0.5rem;
-                          border-radius: 8px;
-                          font-weight: 600;
-                          cursor: pointer;
-                          transition: all 0.25s ease;
-                        "
-                        onmouseover="this.style.backgroundColor='#444'; this.style.color='#fff'; this.style.borderColor='#bbb';"
-                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ddd'; this.style.borderColor='#888';"
-                        onclick="translateText('hi')">Hindi</button>
-              
-                      <button class="btn"
-                        style="
-                          border: 1.5px solid #888;
-                          background-color: transparent;
-                          color: #ddd;
-                          padding: 0.5rem 1rem;
-                          border-radius: 8px;
-                          font-weight: 600;
-                          cursor: pointer;
-                          transition: all 0.25s ease;
-                        "
-                        onmouseover="this.style.backgroundColor='#444'; this.style.color='#fff'; this.style.borderColor='#bbb';"
-                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ddd'; this.style.borderColor='#888';"
-                        onclick="translateText('kn')">Kannada</button>
+                        Detection Result
                     </div>
-              
-                    <h4 class="text-center" id="predect" style="margin-bottom: 1rem; font-weight: 700;">{{ prediction }}</h4>
-                    <hr style="border-color: #444;" />
-                    <p id="description" style="margin-top: 1rem;"><strong>Description:</strong> {{ description }}</p>
-                    <p id="symptoms"><strong>Symptoms:</strong> {{ symptoms }}</p>
-                    <p id="treatment"><strong>Treatment:</strong> {{ treatment }}</p>
-              
-                    {% else %}
-                    <p class="text-muted" style="color: #888;">No prediction available yet.</p>
-                    {% endif %}
-              
-                  </div>
+                    <div class="card-body" style="padding: 1.25rem;">
+
+                        {% if prediction %}
+                        <div class="text-center mb-3" style="margin-bottom: 1rem;">
+                            <button class="btn" style="
+                          border: 1.5px solid #888;
+                          background-color: transparent;
+                          color: #ddd;
+                          padding: 0.5rem 1rem;
+                          margin-right: 0.5rem;
+                          border-radius: 8px;
+                          font-weight: 600;
+                          cursor: pointer;
+                          transition: all 0.25s ease;
+                        " onmouseover="this.style.backgroundColor='#444'; this.style.color='#fff'; this.style.borderColor='#bbb';"
+                                onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ddd'; this.style.borderColor='#888';"
+                                onclick="translateText('en')">English</button>
+
+                            <button class="btn" style="
+                          border: 1.5px solid #888;
+                          background-color: transparent;
+                          color: #ddd;
+                          padding: 0.5rem 1rem;
+                          margin-right: 0.5rem;
+                          border-radius: 8px;
+                          font-weight: 600;
+                          cursor: pointer;
+                          transition: all 0.25s ease;
+                        " onmouseover="this.style.backgroundColor='#444'; this.style.color='#fff'; this.style.borderColor='#bbb';"
+                                onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ddd'; this.style.borderColor='#888';"
+                                onclick="translateText('hi')">Hindi</button>
+
+                            <button class="btn" style="
+                          border: 1.5px solid #888;
+                          background-color: transparent;
+                          color: #ddd;
+                          padding: 0.5rem 1rem;
+                          border-radius: 8px;
+                          font-weight: 600;
+                          cursor: pointer;
+                          transition: all 0.25s ease;
+                        " onmouseover="this.style.backgroundColor='#444'; this.style.color='#fff'; this.style.borderColor='#bbb';"
+                                onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ddd'; this.style.borderColor='#888';"
+                                onclick="translateText('kn')">Kannada</button>
+                        </div>
+
+                        <h4 class="text-center" id="predect" style="margin-bottom: 1rem; font-weight: 700;">{{
+                            prediction }}</h4>
+                        <hr style="border-color: #444;" />
+                        <p id="description" style="margin-top: 1rem;"><strong>Description:</strong> {{ description }}
+                        </p>
+                        <p id="symptoms"><strong>Symptoms:</strong> {{ symptoms }}</p>
+                        <p id="treatment"><strong>Treatment:</strong> {{ treatment }}</p>
+
+                        {% else %}
+                        <p class="text-muted" style="color: #888;">No prediction available yet.</p>
+                        {% endif %}
+
+                    </div>
                 </div>
-              </div>
-              
+            </div>
+
         </div>
 
     </div>
@@ -468,6 +476,68 @@
                 .catch(error => console.error('Error:', error));
         }
     </script>
+    <script>
+        const video = document.getElementById('cameraStream');
+        const canvas = document.getElementById('snapshotCanvas');
+        const captureBtn = document.getElementById('captureBtn');
+        const startCameraBtn = document.getElementById('startCameraBtn');
+        let streamRef = null;
+
+        startCameraBtn.addEventListener('click', () => {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    streamRef = stream;
+                    video.srcObject = stream;
+                    video.style.display = 'block';
+                    captureBtn.style.display = 'inline-block';
+                    startCameraBtn.style.display = 'none';
+                })
+                .catch(err => {
+                    console.error("Camera access denied", err);
+                    alert("Camera access denied.");
+                });
+        });
+
+        captureBtn.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/png');
+
+            if (streamRef) {
+                streamRef.getTracks().forEach(track => track.stop());
+                video.style.display = 'none';
+                captureBtn.style.display = 'none';
+                startCameraBtn.style.display = 'inline-block';
+            }
+
+            fetch('/fake-detection', {
+                method: 'POST',
+                body: JSON.stringify({ image: imageData }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Update prediction result
+                    document.getElementById('predect').innerText = data.prediction;
+                    document.getElementById('description').innerHTML = "<strong>Description:</strong> ";
+                    document.getElementById('symptoms').innerHTML = "<strong>Symptoms:</strong> ";
+                    document.getElementById('treatment').innerHTML = "<strong>Treatment:</strong> ";
+
+                    // Update preview image
+                    const previewImage = document.querySelector('.img-fluid');
+                    if (previewImage) {
+                        previewImage.src = imageData;
+                    }
+                })
+                .catch(err => {
+                    console.error("Fake detection failed", err);
+                });
+        });
+    </script>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
