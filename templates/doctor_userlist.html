@@ -495,18 +495,66 @@
         <input type="text" id="patientSearch" placeholder="Search patient..."
             style="padding: 8px 12px; width: 250px; border: 2px solid black; border-radius: 12px; font-size: 1rem;">
     </div>
+    
 
-    <div class="container-fluid ">
+    <div class="container-fluid">
         {% for message in get_flashed_messages() %}
-        <div class="alert" role="alert"
-            style="text-align: center; font-weight: bold; padding: 15px; font-size: 1.1rem; margin: 10px 0; background-color: green; color: white; position: relative;">
+        <div class="custom-alert" role="alert">
             {{ message }}
-            <button type="button" class="close-btn" onclick="closeAlert(this)"
-                style="position: absolute; top: 5px; right: 10px; background-color: black; border: none; font-size: 1.8rem; color: white; cursor: pointer; padding: 5px 10px; border-radius: 10%; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+            <button type="button" class="close-btn" onclick="closeAlert(this)">
                 &times;
             </button>
         </div>
         {% endfor %}
+    </div>
+    
+    <style>
+        .custom-alert {
+            position: fixed;
+            top: 80px;
+            right: 30px;
+            z-index: 1050;
+            background-color: #28a745; /* Bootstrap 'success' green */
+            color: white;
+            padding: 12px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 300px;
+            max-width: 400px;
+        }
+    
+        .custom-alert .close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+    </style>
+
+<script>
+    // Close manually
+    function closeAlert(btn) {
+        btn.parentElement.style.display = 'none';
+    }
+
+    // Auto-dismiss after 3 seconds
+    setTimeout(function () {
+        let alertBox = document.querySelector('.custom-alert');
+        if (alertBox) {
+            alertBox.style.transition = "opacity 0.5s ease";
+            alertBox.style.opacity = 0;
+            setTimeout(() => alertBox.style.display = "none", 500);
+        }
+    }, 3000);
+</script>
+
 
 
 
@@ -751,7 +799,24 @@
             </div>
         </div>
 
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.getElementById("patientSearch");
+                if (searchInput) {
+                    searchInput.addEventListener("keyup", function () {
+                        const input = this.value.toLowerCase();
+                        const patientCards = document.querySelectorAll(".col-md-6.col-lg-4.mb-4");
+        
+                        patientCards.forEach(function (card) {
+                            const nameElem = card.querySelector(".user-name");
+                            const nameText = nameElem ? nameElem.textContent.toLowerCase() : "";
+                            card.style.display = nameText.includes(input) ? "" : "none";
+                        });
+                    });
+                }
+            });
+        </script>
+        
 
         <script>
 

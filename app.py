@@ -24,7 +24,7 @@ app.secret_key = 'wverihdfuvuwi2482'
 # openai.api_key = "esecret_nqhhtffj88zp16fjcwpl33w8dh"
 # openai.api_base = "https://api.endpoints.anyscale.com/v1"
 # Initialize Groq client
-client = Groq(api_key="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")  # Replace with your actual key
+client = Groq(api_key="sk_Sbfjo3hyrSFHeVWLsroIWGdyb3FYD6fyuNh0pKSrv5EtV8soQJJ6")  # Replace with your actual key
 
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
